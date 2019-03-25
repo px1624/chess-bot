@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "Piece.h"
 
 using namespace std;
 
@@ -47,12 +48,76 @@ int main(){
 }
 
 void TwoPlayerMode(){
-	
-	vector < vector <string> > board;
-	InitializeBoard(board);
-	PrintBoard(board);
+
+    char row;
+    int numRow;
+    int col;
+    char finRow;
+    int numFinRow;
+    int finCol;
+    Piece *pieceptr;
+    int turnCount = 0;
+    string currPiece;
+
+    vector < vector <string> > board;
+    multimap <char, int> moves;
+    multimap <char, int>::iterator mit;
+    InitializeBoard(board);
+    PrintBoard(board);
+
+    for(int i = 0;i<2;i++){
+
+        moves.clear();
+        cout<<"P"<<turnCount%2+1<<" please enter your move: \n";
+
+        //DATA MUST BE ENTERED IN THE FORM ROWOFYOURPIECE COLOFYOURPIECE ROWOFNEWSPACE COLOFNEWSPACE EX. A 2 B 2
+        cin>> row >> col >> finRow >> finCol;
+
+        numRow = row - 'A';
+        numFinRow = finRow - 'A';
+
+        //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
+        if(turnCount%2+1 == 1){
+            while(board[numRow][col][0] != 'w'){
+                cout<<"Please enter a valid piece\n";
+
+                cin>> row >> col >> finRow >> finCol;
+
+                numRow = row - 'A';
+                numFinRow = finRow - 'A';
+            }
+        }
+        //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
+        else if(turnCount%2+1 == 2){
+            while(board[numRow][col][0] != 'b'){
+            cout<<"Please enter a valid piece\n";
+
+            cin>> row >> col >> finRow >> finCol;
+
+            numRow = row - 'A';
+            numFinRow = finRow - 'A';
+
+            }
+        }
+
+        currPiece = board[numRow][col];
+
+        if(currPiece[1] == 'P'){
+
+            pieceptr = new Pawn(numRow, col);
+            pieceptr->ValidMoves(moves, board, turnCount%2+1);
+            for(mit = moves.begin();mit != moves.end();++mit)
+                cout<<mit->first<<" "<<mit->second<<endl;
+
+            delete pieceptr;
+        }
+
+        turnCount++;
+    }
 
 }
+
+
 
 void PrintBoard(vector < vector <string> > &board){
 
