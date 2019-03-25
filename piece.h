@@ -3,6 +3,9 @@
 
 class Piece
 {
+ public:
+
+        virtual void ValidMoves(multimap < char, int > &moves, vector < vector <string> > &board, int turn ) = 0;
 
 };
 
@@ -28,6 +31,17 @@ class Rook : public Piece
 
 class Pawn : public Piece
 {
+public:
+        void ValidMoves(multimap < char, int > &moves, vector < vector <string> > &board, int turn );
+
+        Pawn(int rowIn, int col);
+
+
+    private:
+        int row;
+        int col;
+
+
 };
 
 #endif
