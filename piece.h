@@ -1,12 +1,13 @@
 #ifndef PIECE_H
 #define PIECE_H
 #include <map>
+#include <vector>
 
 class Piece
 {
  public:
     Piece(int row, int col, char color);
-    virtual void ValidMoves(std::multimap<char, int> &moves, ChessBoard &board) = 0;
+    virtual void ValidMoves(std::multimap<char, int> &moves, const vector < vector <Piece*> > board) = 0;
     virtual char GetColor() = 0;
     virtual char GetSymbol() = 0;
     virtual void SetPosition(int row, int col);
@@ -53,8 +54,8 @@ class Pawn : public Piece
 {
 
 public:
-    void ValidMoves(std::multimap<char, int>&moves, ChessBoard &board);
-    Pawn(int row, int col);
+    void ValidMoves(std::multimap<char, int>&moves, const vector < vector <Piece*> > board);
+    Pawn(int row, int col, char color);
 private:
     int turn;
 };

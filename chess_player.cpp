@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include "piece.h"
+#include "chess_board.h"
 
 using namespace std;
 
@@ -57,7 +58,7 @@ void TwoPlayerMode(){
     int turnCount = 0;
     string currPiece;
 
-    vector < vector <string> > board;
+     board;
     multimap <char, int> moves;
     multimap <char, int>::iterator mit;
     InitializeBoard(board);
