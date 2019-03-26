@@ -47,7 +47,7 @@ class Rook : public Piece
 {
 public:
     Rook(int row, int col, char color);
-}
+};
 
 class Pawn : public Piece
 {
