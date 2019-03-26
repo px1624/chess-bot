@@ -6,7 +6,7 @@ class Piece
 {
  public:
     Piece(int row, int col, char color);
-    virtual void ValidMoves(multimap<char, int> &moves, ChessBoard &board) = 0;
+    virtual void ValidMoves(std::multimap<char, int> &moves, ChessBoard &board) = 0;
     virtual char GetColor() = 0;
     virtual char GetSymbol() = 0;
     virtual void SetPosition(int row, int col);
@@ -47,13 +47,13 @@ class Rook : public Piece
 {
 public:
     Rook(int row, int col, char color);
-}
+};
 
 class Pawn : public Piece
 {
 
 public:
-    void ValidMoves(multimap<char, int>&moves, ChessBoard &board);
+    void ValidMoves(std::multimap<char, int>&moves, ChessBoard &board);
     Pawn(int row, int col);
 private:
     int turn;
