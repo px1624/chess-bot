@@ -2,13 +2,10 @@
 #include <string>
 #include "Piece.h"
 
-Pawn::Pawn(int rowIn, int colIn){
+Pawn::Pawn(int row, int col, char color):piece_symbol('P'), Piece(row, col, color)
+{
 
-    row = rowIn;
-    col = colIn;
-
-};
-
+}
 
 
 void Pawn::ValidMoves(multimap<char, int> &moves, vector < vector <string> > &board, int turn){
