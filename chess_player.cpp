@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "Piece.h"
+#include "piece.h"
 
 using namespace std;
 
