@@ -1,7 +1,7 @@
 #ifndef CHESS_BOARD_H
 #define CHESS_BOARD_H
 #include <vector>
-#include "Piece.h"
+#include "piece.h"
 
 class ChessBoard
 {
