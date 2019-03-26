@@ -2,7 +2,7 @@
 #include <string>
 #include "piece.h"
 
-Pawn::Pawn(int row, int col, char color):piece_symbol('P'), Piece(row, col, color)
+Pawn::Pawn(int row, int col, char color):Piece(row, col, color, 'K')
 {
 
 }
