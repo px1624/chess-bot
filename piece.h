@@ -4,9 +4,17 @@
 class Piece
 {
  public:
+    virtual void ValidMoves(multimap < char, int > &moves, ChessBoard &board, int turn ) = 0;
+    virtual char GetColor() = 0;
+    virtual char GetSymbol() = 0;
+    virtual void SetPosition(int row, int col);
+    virtual void GetPosition(int &row, int &col);
 
-        virtual void ValidMoves(multimap < char, int > &moves, vector < vector <string> > &board, int turn ) = 0;
-
+protected:
+    char piece_symbol;
+    char piece_color;
+    int row;
+    int col;
 };
 
 class King : public Piece
@@ -31,6 +39,7 @@ class Rook : public Piece
 
 class Pawn : public Piece
 {
+
 public:
         void ValidMoves(multimap < char, int > &moves, vector < vector <string> > &board, int turn );
 
