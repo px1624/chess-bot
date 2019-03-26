@@ -8,7 +8,7 @@ using namespace std;
 
 void InitializeBoard( vector < vector <string> > &board);
 
-void TwoPlayerMode();
+//void TwoPlayerMode();
 
 int main(){
 
@@ -35,7 +35,7 @@ int main(){
 			cout<<"Invalid Input: Menu Input must be 'A' B' or 'C'"<<endl<<endl;
 	
 		if(userResponse == 2)
-			TwoPlayerMode();
+			//TwoPlayerMode();
 		
 
 		if(userResponse == 3)
@@ -45,7 +45,7 @@ int main(){
 
 
 }
-
+/*
 void TwoPlayerMode(){
 
     char row;
@@ -115,7 +115,7 @@ void TwoPlayerMode(){
     }
 
 }
-
+*/
 //initializes board at the beginning of the game
 void InitializeBoard( vector < vector <string> > &board){
 
