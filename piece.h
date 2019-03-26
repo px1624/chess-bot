@@ -6,7 +6,7 @@
 class Piece
 {
  public:
-    Piece(int row, int col, char color);
+    Piece(int row, int col, char color, char symbol);
     virtual void ValidMoves(std::multimap<char, int> &moves, const std::vector < std::vector <Piece*> > &board) = 0;
     virtual char GetColor() = 0;
     virtual char GetSymbol() = 0;
