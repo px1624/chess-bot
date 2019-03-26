@@ -1,6 +1,8 @@
 #include "chess_board.h"
 #include <string>
 #include <vector>
+#include <iostream>
+using namespace std;
 
 void ChessBoard::Print()
 {
