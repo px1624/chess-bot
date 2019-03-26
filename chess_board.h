@@ -9,7 +9,7 @@ public:
     ChessBoard();
     ~ChessBoard();
     void Print();
-	void move(int rowFrom, int colFrom, int rowTo, int colTo);
+    void move(int rowFrom, int colFrom, int rowTo, int colTo);
 
 private:
     vector<Piece> blacks;
