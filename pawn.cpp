@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "Piece.h"
+#include "piece.h"
 
 Pawn::Pawn(int row, int col, char color):piece_symbol('P'), Piece(row, col, color)
 {
