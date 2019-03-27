@@ -116,6 +116,8 @@ void TwoPlayerMode(){
 
 }
 */
+
+/*
 //initializes board at the beginning of the game
 void InitializeBoard( vector < vector <string> > &board){
 
@@ -172,7 +174,7 @@ void InitializeBoard( vector < vector <string> > &board){
 
 
 }
-
+*/
 
 
 

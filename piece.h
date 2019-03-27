@@ -10,8 +10,8 @@ class Piece
     virtual void ValidMoves(std::multimap<char, int> &moves, const std::vector < std::vector <Piece*> > &board) = 0;
     virtual char GetColor() = 0;
     virtual char GetSymbol() = 0;
-    virtual void SetPosition(int row, int col);
-    virtual void GetPosition(int &row, int &col);
+    virtual void SetPosition(int r, int c) = 0;
+    virtual void GetPosition(int &r, int &c) = 0;
 
 protected:
     char piece_symbol;

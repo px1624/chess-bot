@@ -38,7 +38,14 @@ void ChessBoard::Print()
 
 ChessBoard::ChessBoard()
 {
-
+/*
+	vector < Piece* > temp;
+	Piece *buffer;
+	buffer = new Pawn(0, 0, 'w');
+	temp.push_back(buffer);
+	board.push_back(temp);
+	cout<<board[0][0]->GetColor()<<board[0][0]->GetSymbol()<<endl;
+*/
 }
 
 ChessBoard::~ChessBoard()

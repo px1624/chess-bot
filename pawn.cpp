@@ -1,15 +1,17 @@
 #include <iostream>
 #include <string>
+#include <map>
 #include "piece.h"
+
+using namespace std;
 
 Pawn::Pawn(int row, int col, char color):Piece(row, col, color, 'K')
 {
 
 }
 
-
-void Pawn::ValidMoves(multimap<char, int> &moves, vector < vector <string> > &board, int turn){
-
+void Pawn::ValidMoves(std::multimap<char, int>&moves, const std::vector < std::vector <Piece*> > board){
+/*
     if (turn == 1){
         for(int i = 1; i < 3; i++ ){
 
@@ -62,5 +64,6 @@ void Pawn::ValidMoves(multimap<char, int> &moves, vector < vector <string> > &bo
 
         }
     }
+	*/
 }
 
