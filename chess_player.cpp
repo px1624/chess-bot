@@ -14,9 +14,11 @@ int main(){
 
 	int userResponse;
 
-
+    ChessBoard *b = new ChessBoard();
+    b->Print();
 	//displays game menu, user must enter 1 2 or 3 to choose an option
-	while (true){
+	/*
+    while (true){
 		
 		cout<<"\t\tUltimate Chess!"<<endl<<endl;
 		cout<<"\t\tMain Menu:"<<endl<<endl;
@@ -42,7 +44,7 @@ int main(){
 			return 0;
 	
 	}
-
+    */
 
 }
 /*
