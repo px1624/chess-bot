@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Pawn::Pawn(int row, int col, char color):Piece(row, col, color, 'K')
+Pawn::Pawn(int row, int col, char color):Piece(row, col, color, 'P')
 {
 
 }
@@ -66,4 +66,3 @@ void Pawn::ValidMoves(std::multimap<char, int>&moves, const std::vector < std::v
     }
 	*/
 }
-
