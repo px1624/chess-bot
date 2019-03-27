@@ -1,0 +1,3 @@
++20 2p mode lets 2 players play a complete game of chess
++10 1p bot makes all valid moves
++10 a menu and the chessboard are accurately displayed
