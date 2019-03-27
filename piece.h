@@ -7,11 +7,11 @@ class Piece
 {
  public:
     Piece(int row, int col, char color, char symbol);
-    virtual void ValidMoves(std::multimap<char, int> &moves, const std::vector < std::vector <Piece*> > &board) = 0;
-    virtual char GetColor() = 0;
-    virtual char GetSymbol() = 0;
-    virtual void SetPosition(int r, int c) = 0;
-    virtual void GetPosition(int &r, int &c) = 0;
+    virtual void ValidMoves(std::multimap<char, int> &moves, const std::vector < std::vector <Piece*> > &board);
+    char GetColor();
+    char GetSymbol();
+    void SetPosition(int r, int c);
+    void GetPosition(int &r, int &c);
 
 protected:
     char piece_symbol;
