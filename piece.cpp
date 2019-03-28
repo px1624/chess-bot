@@ -8,6 +8,10 @@ Piece::Piece(int row, int col, char color, char symbol):piece_symbol(symbol), pi
 {
 }
 
+Piece::~Piece()
+{
+}
+
 void Piece::ValidMoves(multimap<char, int> &moves, const vector<vector<Piece*> > &board){
     
 }

@@ -56,6 +56,8 @@ ChessBoard::ChessBoard(): board(8, vector<Piece*>(8, nullptr))
         buffer = new Pawn(1, i, 'b');
         //place it on board
         board[1][i] = buffer;
+        //add piece to blacks
+        blacks.push_back(buffer);
     }
     
     //place white pawns
@@ -65,6 +67,8 @@ ChessBoard::ChessBoard(): board(8, vector<Piece*>(8, nullptr))
         buffer = new Pawn(6, i, 'w');
         //place it on board
         board[6][i] = buffer;
+        //add piece to whites
+        whites.push_back(buffer);
     }
 
     //place black pieces
@@ -92,6 +96,7 @@ ChessBoard::ChessBoard(): board(8, vector<Piece*>(8, nullptr))
         }
 
         board[0][i] = buffer;
+        blacks.push_back(buffer);
     }
     
     //place white pieces
@@ -119,6 +124,7 @@ ChessBoard::ChessBoard(): board(8, vector<Piece*>(8, nullptr))
         }
 
         board[7][i] = buffer;
+        whites.push_back(buffer);
     }
 
 }

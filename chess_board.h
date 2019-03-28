@@ -12,8 +12,8 @@ public:
     void Move(int rFrom, int cFrom, int rTo, int cTo);
 
 private:
-    std::vector<Piece> blacks;
-    std::vector<Piece> whites;
+    std::vector<Piece*> blacks;
+    std::vector<Piece*> whites;
     std::vector<std::vector <Piece*> > board;
 };
 
