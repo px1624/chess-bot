@@ -2,6 +2,7 @@
 #define PIECE_H
 #include <map>
 #include <vector>
+#include <string>
 
 class Piece
 {
@@ -9,6 +10,7 @@ class Piece
     Piece(int row, int col, char color, char symbol);
     virtual ~Piece();
     virtual void ValidMoves(std::multimap<char, int> &moves, const std::vector < std::vector <Piece*> > &board);
+    std::string GetPieceStr();
     char GetColor();
     char GetSymbol();
     void SetPosition(int r, int c);

@@ -12,33 +12,38 @@ Piece::~Piece()
 {
 }
 
-void Piece::ValidMoves(multimap<char, int> &moves, const vector<vector<Piece*> > &board){
-    
+void Piece::ValidMoves(multimap<char, int> &moves, const vector<vector<Piece*> > &board)
+{    
 }
 
-char Piece::GetColor(){
-	
+string Piece::GetPieceStr()
+{
+    string pieceStr = "";
+    pieceStr.push_back(piece_color);
+    pieceStr.push_back(piece_symbol);
+    return pieceStr;
+}
+
+char Piece::GetColor()
+{
 	return piece_color;
-
 }
 
-char Piece::GetSymbol(){
-
+char Piece::GetSymbol()
+{
     return piece_symbol;
 }
 
-void Piece::SetPosition(int r, int c){
-
+void Piece::SetPosition(int r, int c)
+{
 	row = r;
 	col = c;
-
 }
 
-void Piece::GetPosition(int &r, int &c){
-
+void Piece::GetPosition(int &r, int &c)
+{
 	r = row;
 	c = col;
-
 }
 
 

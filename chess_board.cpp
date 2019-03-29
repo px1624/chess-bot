@@ -10,43 +10,32 @@ void ChessBoard::Print()
     string buffRow  = "\t  #    #    #    #    #    #    #    #    #";
 
 
-    cout<<endl;
-    cout<<"\t     1";
-    for(int i = 2;i <= 8;i++)
-        cout<<"    "<<i;
-    cout<<endl;
-    cout<<solidRow<<endl;
-    char rowCount = 'A';
+    cout << endl;
+    cout << "\t     " << 'A';
+    for(unsigned int i = 1; i < board[0].size(); i++)
+        cout << "    " << char('A' + i);
+    cout << endl;
+    cout << solidRow << endl;
 
 
-    for(int i = 0; i < board.size();i++){
-
-        cout<<buffRow<<endl;
-        cout<<"\t"<<rowCount<<" #";
-        for(int j = 0;  j < board[i].size();j++){
+    for(unsigned int i = 0; i < board.size();i++)
+    {
+        cout << buffRow << endl;
+        cout << "\t" << (i + 1) << " #";
+        for(unsigned int j = 0;  j < board[i].size();j++){
             if(board[i][j] != nullptr)
-                cout << " " << board[i][j]->GetColor() << board[i][j]->GetSymbol() << " #";
+                cout << " " << board[i][j]->GetPieceStr()<< " #";
             else
                 cout << "  * #";
         }
-        cout<<endl;
-        cout<<buffRow<<endl;
-        cout<<solidRow<<endl;
-
-        rowCount++;
+        cout << endl;
+        cout << buffRow << endl;
+        cout << solidRow << endl;
     }  
 }
 
 ChessBoard::ChessBoard(): board(8, vector<Piece*>(8, nullptr))
 {
-/*
-	vector < Piece* > temp;
-	Piece *buffer;
-	buffer = new Pawn(0, 0, 'w');
-	temp.push_back(buffer);
-	board.push_back(temp);
-	cout<<board[0][0]->GetColor()<<board[0][0]->GetSymbol()<<endl;
-*/
     Piece* buffer;
 
     //place black pawns
@@ -144,6 +133,9 @@ ChessBoard::~ChessBoard()
         board[i].clear();
     }
     board.clear();
+
+    blacks.clear();
+    whites.clear();
 }
 
 void ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
