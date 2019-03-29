@@ -1,0 +1,5 @@
+10 - Single player mode AI can make logical decisions. (Implement some logic for AI to make a meaningful move, must be more complicated than random)
+10 - Have chess board print properly on game start and after each valid move.
+10 - Have correct move logic for each piece including special moves(en passant, castle, etc.).
+5 - Have a functional menu for the game.
+5 - Have a hint system to give player useful suggestions. (i.e. best move possible only consider the current state of the board).
