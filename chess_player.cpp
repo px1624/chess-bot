@@ -6,18 +6,16 @@
 
 using namespace std;
 
-void InitializeBoard( vector < vector <string> > &board);
 
-//void TwoPlayerMode();
+void TwoPlayerMode();
 
 int main(){
 
 	int userResponse;
 
-    ChessBoard *b = new ChessBoard();
-    b->Print();
+    
 	//displays game menu, user must enter 1 2 or 3 to choose an option
-	/*
+	
     while (true){
 		
 		cout<<"\t\tUltimate Chess!"<<endl<<endl;
@@ -37,146 +35,95 @@ int main(){
 			cout<<"Invalid Input: Menu Input must be 'A' B' or 'C'"<<endl<<endl;
 	
 		if(userResponse == 2)
-			//TwoPlayerMode();
+			TwoPlayerMode();
 		
 
 		if(userResponse == 3)
 			return 0;
 	
 	}
-    */
+    
 
 }
-/*
+
 void TwoPlayerMode(){
 
-    char row;
-    int numRow;
-    int col;
-    char finRow;
-    int numFinRow;
-    int finCol;
-    Piece *pieceptr;
+    int row;
+    int numCol;
+    char col;
+    int finRow;
+    int numFinCol;
+    char finCol;
+    Pawn *pawnptr;
+	Knight *knightptr;
     int turnCount = 0;
-    string currPiece;
+    
 
-     board;
+    ChessBoard game;
     multimap <char, int> moves;
     multimap <char, int>::iterator mit;
-    InitializeBoard(board);
-    PrintBoard(board);
 
     for(int i = 0;i<2;i++){
-
+		
+		game.Print();
         moves.clear();
         cout<<"P"<<turnCount%2+1<<" please enter your move: \n";
 
         //DATA MUST BE ENTERED IN THE FORM ROWOFYOURPIECE COLOFYOURPIECE ROWOFNEWSPACE COLOFNEWSPACE EX. A 2 B 2
         cin>> row >> col >> finRow >> finCol;
 
-        numRow = row - 'A';
-        numFinRow = finRow - 'A';
+        numCol = col - 'A';
+		numFinCol = finCol - 'A';
+        
 
+		cout<<row<<" "<<numCol<<endl;
         //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
         if(turnCount%2+1 == 1){
-            while(board[numRow][col][0] != 'w'){
+            while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'b'){
                 cout<<"Please enter a valid piece\n";
 
                 cin>> row >> col >> finRow >> finCol;
 
-                numRow = row - 'A';
-                numFinRow = finRow - 'A';
+                numCol = col - 'A';
+                numFinCol = finCol - 'A';
             }
         }
         //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
         else if(turnCount%2+1 == 2){
-            while(board[numRow][col][0] != 'b'){
+            while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'w'){
             cout<<"Please enter a valid piece\n";
 
             cin>> row >> col >> finRow >> finCol;
 
-            numRow = row - 'A';
-            numFinRow = finRow - 'A';
+            numCol = col - 'A';
+            numFinCol = finCol - 'A';
 
             }
         }
 
-        currPiece = board[numRow][col];
+		if(game.getSpaceType(row, numCol) == 'P'){
+			pawnptr = new Pawn(row, numCol, game.getSpaceColor(row, numCol));
+			pawnptr->ValidMoves(moves, game.getBoard());
+			delete pawnptr;
 
-        if(currPiece[1] == 'P'){
+		}
+		
+		if(game.getSpaceType(row, numCol) == 'N'){
+			knightptr = new Knight(row, numCol, game.getSpaceColor(row, numCol));
+			knightptr->ValidMoves(moves, game.getBoard());
+			delete knightptr;
 
-            pieceptr = new Pawn(numRow, col);
-            pieceptr->ValidMoves(moves, board, turnCount%2+1);
-            for(mit = moves.begin();mit != moves.end();++mit)
-                cout<<mit->first<<" "<<mit->second<<endl;
+		}
 
-            delete pieceptr;
-        }
+		for(mit = moves.begin(); mit != moves.end();++mit)
+			cout<<mit->first<<" "<<mit->second<<endl;
 
         turnCount++;
     }
 
 }
-*/
-
-/*
-//initializes board at the beginning of the game
-void InitializeBoard( vector < vector <string> > &board){
-
-	vector <string> temp;
-
-	temp.push_back("bR");
-	temp.push_back("bN");
-	temp.push_back("bB");
-	temp.push_back("bQ");
-	temp.push_back("bK");
-	temp.push_back("bB");
-	temp.push_back("bN");
-	temp.push_back("bR");
-
-	board.push_back(temp);
-
-	temp.resize(0);
-
-	for(int i = 0; i < 8;i++)
-		temp.push_back("bP");
-		
-	board.push_back(temp);
-
-	temp.resize(0);
-	
-	for(int i = 0; i < 4;i++){
-		for(int j = 0; j < 8;j++)
-			temp.push_back(" *");
-
-		board.push_back(temp);
-		temp.resize(0);
-
-	}
-
-	for(int i = 0; i < 8;i++)
-        temp.push_back("wP");
-
-    board.push_back(temp);
-
-    temp.resize(0);
-
-	temp.push_back("wR");
-    temp.push_back("wN");
-    temp.push_back("wB");
-    temp.push_back("wQ");
-    temp.push_back("wK");
-    temp.push_back("wB");
-    temp.push_back("wN");
-    temp.push_back("wR");
-
-    board.push_back(temp);
-
-    temp.resize(0);
 
 
-}
-*/
 
 
 

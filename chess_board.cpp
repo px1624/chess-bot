@@ -142,3 +142,37 @@ void ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
 {
 
 }
+
+char ChessBoard::getSpaceColor(int r, int c){
+	return board[r][c]->GetColor();
+}
+
+
+char ChessBoard::getSpaceType(int r, int c){
+	return board[r][c]->GetSymbol();
+}
+
+bool ChessBoard::checkNull(int r, int c){
+
+	if(board[r][c] == nullptr)
+		return true;
+	else
+		return false;
+
+}
+
+
+Piece *ChessBoard::getPiece(int r, int c){
+
+	return board[r][c];
+
+}
+
+
+
+std::vector<std::vector <Piece*> > ChessBoard::getBoard(){
+
+	return board;
+
+}
+
