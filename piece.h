@@ -7,7 +7,7 @@
 class Piece
 {
  public:
-    Piece(int row, int col, char color, char symbol);
+    Piece(int row, int col, char color, char symbol, int pVal);
     virtual ~Piece();
     virtual void ValidMoves(std::multimap<char, int> &moves, const std::vector < std::vector <Piece*> > &board);
     std::string GetPieceStr();
@@ -21,6 +21,7 @@ protected:
     char piece_color;
     int row;
     int col;
+    int piece_value;
 };
 
 class King : public Piece

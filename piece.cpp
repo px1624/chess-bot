@@ -4,8 +4,12 @@
 
 using namespace std;
 
-Piece::Piece(int row, int col, char color, char symbol):piece_symbol(symbol), piece_color(color), row(row), col(col)
+Piece::Piece(int row, int col, char color, char symbol, int pVal):piece_symbol(symbol), piece_color(color), row(row), col(col), piece_value(pVal)
 {
+    if(color == 'b')
+    {
+        piece_value *= -1;
+    }
 }
 
 Piece::~Piece()

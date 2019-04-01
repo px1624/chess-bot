@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Pawn::Pawn(int row, int col, char color):Piece(row, col, color, 'P')
+Pawn::Pawn(int row, int col, char color):Piece(row, col, color, 'P', 10)
 {
 
 }
