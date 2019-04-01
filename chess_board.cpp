@@ -21,7 +21,7 @@ void ChessBoard::Print()
     for(unsigned int i = 0; i < board.size();i++)
     {
         cout << buffRow << endl;
-        cout << "\t" << i << " #";
+        cout << "\t" << 8 - i << " #";
         for(unsigned int j = 0;  j < board[i].size();j++){
             if(board[i][j] != nullptr)
                 cout << " " << board[i][j]->GetPieceStr()<< " #";
