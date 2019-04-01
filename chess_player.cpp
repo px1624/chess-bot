@@ -116,7 +116,7 @@ void TwoPlayerMode(){
 		}
 
 		for(mit = moves.begin(); mit != moves.end();++mit)
-			cout<<mit->first<<" "<<mit->second<<endl;
+			cout<<static_cast<int>(mit->first - 'A')<<" "<<static_cast<char>(mit->second + 'A')<<endl;
 
         turnCount++;
     }
