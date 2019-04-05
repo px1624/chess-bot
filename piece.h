@@ -28,12 +28,14 @@ class King : public Piece
 {
 public:
     King(int row, int col, char color);
+    void ValidMoves(std::multimap<int, int>&moves, const std::vector < std::vector <Piece*> > &board);
 };
 
 class Queen : public Piece
 {
 public:
     Queen(int row, int col, char color);
+    void ValidMoves(std::multimap<int, int>&moves, const std::vector < std::vector <Piece*> > &board);
 };
 
 class Bishop : public Piece

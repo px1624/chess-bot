@@ -9,7 +9,7 @@ Bishop::Bishop(int row, int col, char color):Piece(row, col, color, 'B', 30)
 void Bishop::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> > &board)
 {
     moves.clear();
-    unsigned int r, c;
+    int r, c;
     
     //check top left
     for(r = this->row - 1, c = this->col - 1; r >= 0 && c >= 0;)
@@ -29,7 +29,7 @@ void Bishop::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> >
     }
 
     //check top right
-    for(r = this->row - 1, c = this->col + 1; r >= 0 && c < board.size();)
+    for(r = this->row - 1, c = this->col + 1; r >= 0 && c < (int)board.size();)
     {
         if(board[r][c] == nullptr)
             moves.insert(make_pair(r, c));
@@ -46,7 +46,7 @@ void Bishop::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> >
     }
  
     //check bottom left
-    for(r = this->row + 1, c = this->col - 1; r < board.size() && c >= 0;)
+    for(r = this->row + 1, c = this->col - 1; r < (int)board.size() && c >= 0;)
     {
         if(board[r][c] == nullptr)
             moves.insert(make_pair(r, c));
@@ -63,7 +63,7 @@ void Bishop::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> >
     }
  
     //check bottom right
-    for(r = this->row + 1, c = this->col + 1; r < board.size() && c < board.size();)
+    for(r = this->row + 1, c = this->col + 1; r < (int)board.size() && c < (int)board.size();)
     {
         if(board[r][c] == nullptr)
             moves.insert(make_pair(r, c));

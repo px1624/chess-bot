@@ -12,17 +12,17 @@ void ChessBoard::Print()
 
     cout << endl;
     cout << "\t     " << 'A';
-    for(unsigned int i = 1; i < board[0].size(); i++)
+    for(int i = 1; i < col_size; i++)
         cout << "    " << char('A' + i);
     cout << endl;
     cout << solidRow << endl;
 
 
-    for(unsigned int i = 0; i < board.size();i++)
+    for(int i = 0; i < row_size; i++)
     {
         //cout << buffRow << endl;
         cout << "\t" << 8 - i << " |";
-        for(unsigned int j = 0;  j < board[i].size();j++){
+        for(int j = 0;  j < col_size; j++){
             cout << " " << (board[i][j] == nullptr ? "  ": board[i][j]->GetPieceStr()) << " |";
         }
         cout << endl;
@@ -31,13 +31,40 @@ void ChessBoard::Print()
     }  
 }
 
-ChessBoard::ChessBoard(): board(8, vector<Piece*>(8, nullptr))
+void ChessBoard::PrintAllValidMoves()
+{
+    Piece* p;
+    multimap<int, int> m;
+    multimap<int, int>::iterator it;
+    int r, c;
+
+    for(int i = 0; i < row_size; i++)
+    {
+        for(int j = 0; j < col_size; j++)
+        {
+            p = board[i][j];
+            if(p != nullptr)
+            {
+                m.clear();
+                p->ValidMoves(m, board);
+                p->GetPosition(r, c);
+
+                printf("%s (%d, %d):", p->GetPieceStr().c_str(), r, c);
+                for(it = m.begin(); it != m.end(); ++it)
+                    printf(" (%d, %d)", it->first, it->second);
+                printf("\n");
+            }
+        }
+    }
+}
+
+ChessBoard::ChessBoard(): board(row_size, vector<Piece*>(col_size, nullptr))
 {
     Piece* buffer;
 
     //place black pawns
     for(unsigned int i = 0; i < board[1].size(); i++)
-    {
+    {    
         //make pawn
         buffer = new Pawn(1, i, 'b');
         //place it on board

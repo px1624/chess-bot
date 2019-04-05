@@ -9,6 +9,7 @@ public:
     ChessBoard();
     ~ChessBoard();
     void Print();
+    void PrintAllValidMoves();
     void Move(int rFrom, int cFrom, int rTo, int cTo);
 	char getSpaceColor(int r, int c);
 	char getSpaceType(int r, int c);
@@ -17,6 +18,8 @@ public:
 	std::vector<std::vector <Piece*> > getBoard();
 
 private:
+    const int row_size = 8;
+    const int col_size = 8;
     std::vector<Piece*> blacks;
     std::vector<Piece*> whites;
     std::vector<std::vector <Piece*> > board;

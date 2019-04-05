@@ -67,6 +67,7 @@ void TwoPlayerMode(){
 		
 		game.Print();
         moves.clear();
+        game.PrintAllValidMoves();
         cout<<"P"<<turnCount%2+1<<" please enter your move: \n";
 
         //DATA MUST BE ENTERED IN THE FORM ROWOFYOURPIECE COLOFYOURPIECE ROWOFNEWSPACE COLOFNEWSPACE EX. A 2 B 2
