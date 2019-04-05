@@ -9,7 +9,7 @@ class Piece
  public:
     Piece(int row, int col, char color, char symbol, int pVal);
     virtual ~Piece();
-    virtual void ValidMoves(std::multimap<char, int> &moves, const std::vector < std::vector <Piece*> > &board);
+    virtual void ValidMoves(std::multimap<int, int> &moves, const std::vector < std::vector <Piece*> > &board);
     std::string GetPieceStr();
     char GetColor();
     char GetSymbol();
@@ -40,12 +40,13 @@ class Bishop : public Piece
 {
 public:
     Bishop(int row, int col, char color);
+    void ValidMoves(std::multimap<int, int>&moves, const std::vector < std::vector <Piece*> > &board);
 };
 
 class Knight : public Piece
 {
 public:
-	void ValidMoves(std::multimap<char, int>&moves, const std::vector < std::vector <Piece*> > &board);
+	void ValidMoves(std::multimap<int, int>&moves, const std::vector < std::vector <Piece*> > &board);
     Knight(int row, int col, char color);
 };
 
@@ -53,14 +54,14 @@ class Rook : public Piece
 {
 public:
     Rook(int row, int col, char color);
-    void ValidMoves(std::multimap<char, int>&moves, const std::vector < std::vector <Piece*> > &board);
+    void ValidMoves(std::multimap<int, int>&moves, const std::vector < std::vector <Piece*> > &board);
 };
 
 class Pawn : public Piece
 {
 
 public:
-    void ValidMoves(std::multimap<char, int>&moves, const std::vector < std::vector <Piece*> > &board);
+    void ValidMoves(std::multimap<int, int>&moves, const std::vector < std::vector <Piece*> > &board);
     Pawn(int row, int col, char color);  
 };
 

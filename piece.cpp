@@ -16,7 +16,7 @@ Piece::~Piece()
 {
 }
 
-void Piece::ValidMoves(multimap<char, int> &moves, const vector<vector<Piece*> > &board)
+void Piece::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> > &board)
 {    
 }
 

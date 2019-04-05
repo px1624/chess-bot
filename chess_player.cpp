@@ -60,8 +60,8 @@ void TwoPlayerMode(){
     
 
     ChessBoard game;
-    multimap <char, int> moves;
-    multimap <char, int>::iterator mit;
+    multimap <int, int> moves;
+    multimap <int, int>::iterator mit;
 
     for(int i = 0;i<2;i++){
 		
@@ -121,7 +121,7 @@ void TwoPlayerMode(){
         game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());
 
 		for(mit = moves.begin(); mit != moves.end();++mit)
-			cout<<static_cast<int>(mit->first - 'A')<<" "<<static_cast<char>(mit->second + 'A')<<endl;
+			cout<< mit->first <<" "<< mit->second <<endl;
 
         turnCount++;
     }

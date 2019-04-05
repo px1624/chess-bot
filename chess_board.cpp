@@ -6,8 +6,8 @@ using namespace std;
 
 void ChessBoard::Print()
 {
-    string solidRow = "\t  #########################################";
-    string buffRow  = "\t  #    #    #    #    #    #    #    #    #";
+    string solidRow = "\t  +----+----+----+----+----+----+----+----+";
+    string buffRow  = "\t  |    |    |    |    |    |    |    |    |";
 
 
     cout << endl;
@@ -20,16 +20,13 @@ void ChessBoard::Print()
 
     for(unsigned int i = 0; i < board.size();i++)
     {
-        cout << buffRow << endl;
-        cout << "\t" << 8 - i << " #";
+        //cout << buffRow << endl;
+        cout << "\t" << 8 - i << " |";
         for(unsigned int j = 0;  j < board[i].size();j++){
-            if(board[i][j] != nullptr)
-                cout << " " << board[i][j]->GetPieceStr()<< " #";
-            else
-                cout << "  * #";
+            cout << " " << (board[i][j] == nullptr ? "  ": board[i][j]->GetPieceStr()) << " |";
         }
         cout << endl;
-        cout << buffRow << endl;
+        //cout << buffRow << endl;
         cout << solidRow << endl;
     }  
 }

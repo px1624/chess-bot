@@ -10,7 +10,7 @@ Pawn::Pawn(int row, int col, char color):Piece(row, col, color, 'P', 10)
 
 }
 
-void Pawn::ValidMoves(std::multimap<char, int>&moves, const std::vector < std::vector <Piece*> > &board){
+void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::vector <Piece*> > &board){
 
 	    if (piece_color == 'w'){
         for(int i = 1; i < 3; i++ ){
@@ -18,7 +18,7 @@ void Pawn::ValidMoves(std::multimap<char, int>&moves, const std::vector < std::v
             if(row - i >=0){
 
                 if(board[row - i][col] == nullptr)
-                    moves.insert( std::pair<char,int>(row - i + 'A', col));
+                    moves.insert( std::pair<int,int>(row - i, col));
 
             }
 
@@ -28,7 +28,7 @@ void Pawn::ValidMoves(std::multimap<char, int>&moves, const std::vector < std::v
 
             if(board[row - 1][col-1] != nullptr){
 				if(board[row-1][col-1]->GetColor() != board[row][col]->GetColor())
-					moves.insert( std::pair<char,int>(row - 1 + 'A', col - 1));
+					moves.insert( std::pair<int,int>(row - 1, col - 1));
 			}
 
         }
@@ -37,7 +37,7 @@ void Pawn::ValidMoves(std::multimap<char, int>&moves, const std::vector < std::v
 
             if(board[row - 1][col+1] != nullptr){
 				if(board[row - 1][col+1]->GetColor() !=  board[row][col]->GetColor())
-					moves.insert( std::pair<char,int>(row - 1 + 'A', col + 1));
+					moves.insert( std::pair<int,int>(row - 1, col + 1));
 			}
         }
     }
@@ -47,7 +47,7 @@ void Pawn::ValidMoves(std::multimap<char, int>&moves, const std::vector < std::v
             if(row + i >=0){
 
                 if(board[row + i][col] == nullptr)
-                    moves.insert( std::pair<char,int>(row + i + 'A', col));
+                    moves.insert( std::pair<int,int>(row + i, col));
 
             }
 
@@ -57,7 +57,7 @@ void Pawn::ValidMoves(std::multimap<char, int>&moves, const std::vector < std::v
 
 			if(board[row + 1][col-1] != nullptr){
 				if(board[row + 1][col-1]->GetColor() !=  board[row][col]->GetColor())
-					moves.insert( std::pair<char,int>(row + 1 + 'A', col - 1));
+					moves.insert( std::pair<int,int>(row + 1, col - 1));
 			}
         }
 
@@ -65,7 +65,7 @@ void Pawn::ValidMoves(std::multimap<char, int>&moves, const std::vector < std::v
 
 			if(board[row + 1][col+1] != nullptr){
 				if(board[row + 1][col+1]->GetColor() !=  board[row][col]->GetColor())
-					moves.insert( std::pair<char,int>(row + 1 + 'A', col + 1));
+					moves.insert( std::pair<int,int>(row + 1, col + 1));
 			}
             
         }
