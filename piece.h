@@ -45,7 +45,7 @@ public:
 class Knight : public Piece
 {
 public:
-	void ValidMoves(std::multimap<char, int>&moves, const std::vector < std::vector <Piece*> > board);
+	void ValidMoves(std::multimap<char, int>&moves, const std::vector < std::vector <Piece*> > &board);
     Knight(int row, int col, char color);
 };
 
@@ -53,15 +53,15 @@ class Rook : public Piece
 {
 public:
     Rook(int row, int col, char color);
+    void ValidMoves(std::multimap<char, int>&moves, const std::vector < std::vector <Piece*> > &board);
 };
 
 class Pawn : public Piece
 {
 
 public:
-    void ValidMoves(std::multimap<char, int>&moves, const std::vector < std::vector <Piece*> > board);
-    Pawn(int row, int col, char color);
-    
+    void ValidMoves(std::multimap<char, int>&moves, const std::vector < std::vector <Piece*> > &board);
+    Pawn(int row, int col, char color);  
 };
 
 #endif

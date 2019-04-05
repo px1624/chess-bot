@@ -1,4 +1,68 @@
 #include "piece.h"
+
+using namespace std;
+
 Rook::Rook(int row, int col, char color):Piece(row, col, color, 'R', 50)
 {
+}
+
+void Rook::ValidMoves(multimap<char, int> &moves, const vector<vector<Piece*> > &board)
+{
+    moves.clear();
+    //check left
+    for(int i = this->col - 1; i >= 0; --i)
+    {
+        if(board[row][i] == nullptr)
+            moves.insert(make_pair(this->row + 'A', i));
+        else
+        {
+            if(board[row][i]->GetColor() != this->piece_color)
+                moves.insert(make_pair(this->row + 'A', i));
+            
+            break;
+        }
+    }
+
+    //check right
+    for(int i = this->col + 1; i < board[this->row].size(); ++i)
+    {
+        if(board[row][i] == nullptr)
+            moves.insert(make_pair(this->row + 'A', i));
+        else
+        {
+            if(board[row][i]->GetColor() != this->piece_color)
+                moves.insert(make_pair(this->row + 'A', i));
+            
+            break;
+        }
+    }
+
+    //check top
+    for(int i = this->row - 1; i >= 0; --i)
+    {
+        if(board[i][this->col] == nullptr)
+            moves.insert(make_pair(i + 'A', this->col));
+        else
+        {
+            if(board[i][this->col]->GetColor() != this->piece_color)
+                moves.insert(make_pair(i + 'A', this->col));
+            
+            break;
+        }
+    }
+    
+    //check bottom
+    for(int i = this->row + 1; i < board.size(); ++i)
+    {
+        if(board[i][this->col] == nullptr)
+            moves.insert(make_pair(i + 'A', this->col));
+        else
+        {
+            if(board[row][i]->GetColor() != this->piece_color)
+                moves.insert(make_pair(i + 'A', this->col));
+            
+            break;
+        }
+    }
+
 }

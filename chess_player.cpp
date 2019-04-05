@@ -101,6 +101,8 @@ void TwoPlayerMode(){
             }
         }
 
+        /* shouldn't need to check piece because validmoves function is virtual
+         *
 		if(game.getSpaceType(row, numCol) == 'P'){
 			pawnptr = new Pawn(row, numCol, game.getSpaceColor(row, numCol));
 			pawnptr->ValidMoves(moves, game.getBoard());
@@ -114,6 +116,9 @@ void TwoPlayerMode(){
 			delete knightptr;
 
 		}
+        */
+
+        game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());
 
 		for(mit = moves.begin(); mit != moves.end();++mit)
 			cout<<static_cast<int>(mit->first - 'A')<<" "<<static_cast<char>(mit->second + 'A')<<endl;
@@ -122,11 +127,3 @@ void TwoPlayerMode(){
     }
 
 }
-
-
-
-
-
-
-
-

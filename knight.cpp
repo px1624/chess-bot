@@ -4,7 +4,7 @@ Knight::Knight(int row, int col, char color):Piece(row, col, color, 'N', 30)
 
 }
 
-void Knight::ValidMoves(std::multimap<char, int>&moves, const std::vector < std::vector <Piece*> > board){
+void Knight::ValidMoves(std::multimap<char, int>&moves, const std::vector < std::vector <Piece*> > &board){
 
 	
 

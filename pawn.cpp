@@ -10,7 +10,7 @@ Pawn::Pawn(int row, int col, char color):Piece(row, col, color, 'P', 10)
 
 }
 
-void Pawn::ValidMoves(std::multimap<char, int>&moves, const std::vector < std::vector <Piece*> > board){
+void Pawn::ValidMoves(std::multimap<char, int>&moves, const std::vector < std::vector <Piece*> > &board){
 
 	    if (piece_color == 'w'){
         for(int i = 1; i < 3; i++ ){
