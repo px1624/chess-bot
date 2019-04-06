@@ -49,9 +49,9 @@ void ChessBoard::PrintAllValidMoves()
                 p->ValidMoves(m, board);
                 p->GetPosition(r, c);
 
-                printf("%s (%d, %d):", p->GetPieceStr().c_str(), r, c);
+                printf("%s (%d, %c):", p->GetPieceStr().c_str(), 8 - r, static_cast<char>(c+'A'));
                 for(it = m.begin(); it != m.end(); ++it)
-                    printf(" (%d, %d)", it->first, it->second);
+                    printf(" (%d, %c)", 8 - it->first, static_cast<char>(it->second + 'A'));
                 printf("\n");
             }
         }

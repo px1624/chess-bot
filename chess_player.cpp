@@ -54,8 +54,6 @@ void TwoPlayerMode(){
     int finRow;
     int numFinCol;
     char finCol;
-    Pawn *pawnptr;
-	Knight *knightptr;
     int turnCount = 0;
     
 
@@ -73,6 +71,7 @@ void TwoPlayerMode(){
         //DATA MUST BE ENTERED IN THE FORM ROWOFYOURPIECE COLOFYOURPIECE ROWOFNEWSPACE COLOFNEWSPACE EX. A 2 B 2
         cin>> row >> col >> finRow >> finCol;
 
+		row = 8 - row;
         numCol = col - 'A';
 		numFinCol = finCol - 'A';
         
@@ -85,6 +84,7 @@ void TwoPlayerMode(){
 
                 cin>> row >> col >> finRow >> finCol;
 
+				row = 8 - row;
                 numCol = col - 'A';
                 numFinCol = finCol - 'A';
             }
@@ -96,6 +96,7 @@ void TwoPlayerMode(){
 
             cin>> row >> col >> finRow >> finCol;
 
+			row = 8 - row;
             numCol = col - 'A';
             numFinCol = finCol - 'A';
 
