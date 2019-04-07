@@ -123,7 +123,7 @@ void TwoPlayerMode(){
         game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());
 
 		for(mit = moves.begin(); mit != moves.end();++mit)
-			cout<< mit->first <<" "<< mit->second <<endl;
+			cout<< 8 - mit->first <<" "<< static_cast<char>(mit->second+'A') <<endl;
 
         turnCount++;
     }

@@ -12,6 +12,7 @@ Pawn::Pawn(int row, int col, char color):Piece(row, col, color, 'P', 10)
 
 void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::vector <Piece*> > &board){
 
+		moves.clear();
 	    if (piece_color == 'w'){
         for(int i = 1; i < 3; i++ ){
 
@@ -44,7 +45,7 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
 	else if (piece_color == 'b'){
         for(int i = 1; i < 3; i++ ){
 
-            if(row + i >=0){
+            if(row + i <= 7){
 
                 if(board[row + i][col] == nullptr)
                     moves.insert( std::pair<int,int>(row + i, col));

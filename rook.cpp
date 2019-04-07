@@ -58,7 +58,7 @@ void Rook::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> > &
             moves.insert(make_pair(i, this->col));
         else
         {
-            if(board[row][i]->GetColor() != this->piece_color)
+            if(board[i][this->col]->GetColor() != this->piece_color)
                 moves.insert(make_pair(i, this->col));
             
             break;
