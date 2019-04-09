@@ -16,6 +16,7 @@ public:
 	bool checkNull(int r, int c);
 	Piece *getPiece(int r, int c);
 	std::vector<std::vector <Piece*> > getBoard();
+	int check(int turn);
 
 private:
     const int row_size = 8;

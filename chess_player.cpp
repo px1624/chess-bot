@@ -65,7 +65,10 @@ void TwoPlayerMode(){
 		
 		game.Print();
         moves.clear();
-        game.PrintAllValidMoves();
+//        game.PrintAllValidMoves();
+		if(game.check(turnCount%2+1) == 1)
+			cout<<"CHECK!"<<endl;
+
         cout<<"P"<<turnCount%2+1<<" please enter your move: \n";
 
         //DATA MUST BE ENTERED IN THE FORM ROWOFYOURPIECE COLOFYOURPIECE ROWOFNEWSPACE COLOFNEWSPACE EX. A 2 B 2
@@ -124,6 +127,9 @@ void TwoPlayerMode(){
 
 		for(mit = moves.begin(); mit != moves.end();++mit)
 			cout<< 8 - mit->first <<" "<< static_cast<char>(mit->second+'A') <<endl;
+
+		
+	
 
         turnCount++;
     }

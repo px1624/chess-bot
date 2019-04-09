@@ -66,11 +66,11 @@ ChessBoard::ChessBoard(): board(row_size, vector<Piece*>(col_size, nullptr))
     for(unsigned int i = 0; i < board[1].size(); i++)
     {    
         //make pawn
-        buffer = new Pawn(1, i, 'b');
+        buffer = new Pawn(1, i, 'w');
         //place it on board
         board[1][i] = buffer;
         //add piece to blacks
-        blacks.push_back(buffer);
+        whites.push_back(buffer);
     }
     
     //place white pawns
@@ -198,5 +198,57 @@ std::vector<std::vector <Piece*> > ChessBoard::getBoard(){
 
 	return board;
 
+}
+
+int ChessBoard::check(int turn){
+
+	std::multimap<int, int> kmoves;
+	std::multimap<int, int>::iterator mit;
+	int krow, kcol;
+	if(turn == 2){
+		
+		for(unsigned int i = 0; i < blacks.size();i++){
+			if(blacks[i]->GetSymbol() == 'K'){
+				blacks[i]->GetPosition(krow, kcol);
+				break;
+			}
+		}
+
+		for(unsigned int i = 0;i < whites.size();i++){
+			
+			kmoves.clear();
+			whites[i]->ValidMoves(kmoves, this->board);
+			for(mit = kmoves.begin(); mit != kmoves.end();++mit){
+				
+				if(mit->first ==  krow && mit->second == kcol){
+					return 1;
+				}
+			}
+		}
+		return 0;
+	}
+	else{
+		
+		for(unsigned int i = 0; i < whites.size();i++){
+			if(whites[i]->GetSymbol() == 'K'){
+				whites[i]->GetPosition(krow, kcol);
+				break;
+			}
+		}
+	
+		for(unsigned int i = 0;i < blacks.size();i++){
+			
+			kmoves.clear();
+			blacks[i]->ValidMoves(kmoves, this->board);
+			for(mit = kmoves.begin(); mit != kmoves.end();++mit){
+				if(mit->first == krow && mit->second == kcol){
+					
+					return 1;
+				}
+			}
+		}
+		return 0;
+
+	}
 }
 
