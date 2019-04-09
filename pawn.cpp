@@ -62,7 +62,7 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
 			}
         }
 
-        if(row+1 <= (int)board.size() && col + 1 < board[0].size()){
+        if(row+1 <= (int)board.size() && col + 1 < (int)board[0].size()){
 
 			if(board[row + 1][col+1] != nullptr){
 				if(board[row + 1][col+1]->GetColor() !=  board[row][col]->GetColor())

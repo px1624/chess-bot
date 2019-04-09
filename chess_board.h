@@ -20,9 +20,12 @@ public:
 private:
     const int row_size = 8;
     const int col_size = 8;
+    int turnCount;
     std::vector<Piece*> blacks;
     std::vector<Piece*> whites;
     std::vector<std::vector <Piece*> > board;
+    bool ContainsMove(std::multimap<int, int> &moves, int r, int c);
+    void RemovePiece(int r, int c);
 };
 
 #endif

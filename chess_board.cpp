@@ -2,6 +2,9 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <algorithm>
+#include <map>
+
 using namespace std;
 
 void ChessBoard::Print()
@@ -58,7 +61,7 @@ void ChessBoard::PrintAllValidMoves()
     }
 }
 
-ChessBoard::ChessBoard(): board(row_size, vector<Piece*>(col_size, nullptr))
+ChessBoard::ChessBoard() : turnCount(0), board(row_size, vector<Piece*>(col_size, nullptr))
 {
     Piece* buffer;
 
@@ -164,7 +167,66 @@ ChessBoard::~ChessBoard()
 
 void ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
 {
+    //turnCount stores the count before the move
+    //0 is white's move because white moves first
+    bool isBlackTurn = turnCount % 2;
+    Piece* src = board[rFrom][cFrom];
+    multimap<int, int> moves;
+    if(src == nullptr)
+        cout << "Invalid move! There is no chess piece on this cell.\n";
+    
+    if((isBlackTurn && src->GetColor() == 'w') || (!isBlackTurn && src->GetColor() == 'b'))
+        cout << "Invalid move! You can't move another player's piece.\n";
 
+    src->ValidMoves(moves, board);
+    
+    //if user's move is contained within the chosen piece's valid moves map
+    if(ContainsMove(moves, rTo, cTo))
+    {
+        //remove destination piece
+        RemovePiece(rTo, cTo);
+        //move source to destination
+        board[rTo][cTo] = src;
+        //set source to nullptr
+        board[rFrom][cFrom] = nullptr;
+    }
+    else
+        cout << "Invalid move! This piece cannot move here.";
+}
+
+bool ChessBoard::ContainsMove(multimap<int, int> &moves, int r, int c)
+{
+    bool contains = false;
+    multimap<int, int>::iterator it;
+    for(it = moves.begin(); it != moves.end(); ++it)
+    {
+        if(it->first == r && it->second == c)
+        {
+            contains = true;
+            break;
+        }
+    }
+    return contains;
+}
+
+void ChessBoard::RemovePiece(int r, int c)
+{
+    Piece* p = board[r][c];
+    if(p == nullptr)
+        return;
+    
+    vector<Piece*> *vP;
+    //pick whether to delete from white
+    if(p->GetColor() == 'w')
+        vP = &whites;
+    else
+        vP = &blacks;
+
+    //erase-remove idiom
+    //remove a piece from either whites or blacks
+    vP->erase(remove(vP->begin(), vP->end(), p), vP->end());
+    board[r][c] = nullptr;
+    delete p;
 }
 
 char ChessBoard::getSpaceColor(int r, int c){
