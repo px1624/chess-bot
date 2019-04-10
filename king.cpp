@@ -8,7 +8,7 @@ King::King(int row, int col, char color):Piece(row, col, color, 'K', 900)
 }
 
 void King::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> > &board)
-{
+{/*
     moves.clear();
     vector<pair<int, int>> allMoves;
     Piece* pPtr;
@@ -29,5 +29,5 @@ void King::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> > &
         {
             moves.insert(allMoves[i]);
         }
-    }
+    }*/
 }

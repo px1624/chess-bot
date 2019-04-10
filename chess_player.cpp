@@ -75,6 +75,7 @@ void TwoPlayerMode(){
         cin>> row >> col >> finRow >> finCol;
 
 		row = 8 - row;
+		finRow = 8 - finRow;
         numCol = col - 'A';
 		numFinCol = finCol - 'A';
         
@@ -88,6 +89,7 @@ void TwoPlayerMode(){
                 cin>> row >> col >> finRow >> finCol;
 
 				row = 8 - row;
+				finRow = 8 - finRow;
                 numCol = col - 'A';
                 numFinCol = finCol - 'A';
             }
@@ -95,17 +97,18 @@ void TwoPlayerMode(){
         //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
         else if(turnCount%2+1 == 2){
             while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'w'){
-            cout<<"Please enter a valid piece\n";
+				cout<<"Please enter a valid piece\n";
 
-            cin>> row >> col >> finRow >> finCol;
+				cin>> row >> col >> finRow >> finCol;
 
-			row = 8 - row;
-            numCol = col - 'A';
-            numFinCol = finCol - 'A';
+				row = 8 - row;
+				finRow = 8 - finRow;
+				numCol = col - 'A';
+				numFinCol = finCol - 'A';
 
             }
         }
-
+		cout<<finRow<<" "<<numFinCol<<endl;
         /* shouldn't need to check piece because validmoves function is virtual
          *
 		if(game.getSpaceType(row, numCol) == 'P'){
@@ -126,9 +129,9 @@ void TwoPlayerMode(){
         game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());
 
 		for(mit = moves.begin(); mit != moves.end();++mit)
-			cout<< 8 - mit->first <<" "<< static_cast<char>(mit->second+'A') <<endl;
+			cout<< mit->first <<" "<< static_cast<char>(mit->second+'A') <<endl;
 
-		
+		game.Move(row, numCol, finRow, numFinCol);	
 	
 
         turnCount++;

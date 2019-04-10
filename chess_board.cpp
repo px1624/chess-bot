@@ -64,16 +64,17 @@ void ChessBoard::PrintAllValidMoves()
 ChessBoard::ChessBoard() : turnCount(0), board(row_size, vector<Piece*>(col_size, nullptr))
 {
     Piece* buffer;
+	turnCount = 0;
 
     //place black pawns
     for(unsigned int i = 0; i < board[1].size(); i++)
     {    
         //make pawn
-        buffer = new Pawn(1, i, 'w');
+        buffer = new Pawn(1, i, 'b');
         //place it on board
         board[1][i] = buffer;
         //add piece to blacks
-        whites.push_back(buffer);
+		blacks.push_back(buffer);
     }
     
     //place white pawns
@@ -179,7 +180,7 @@ void ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
         cout << "Invalid move! You can't move another player's piece.\n";
 
     src->ValidMoves(moves, board);
-    
+
     //if user's move is contained within the chosen piece's valid moves map
     if(ContainsMove(moves, rTo, cTo))
     {
@@ -192,6 +193,8 @@ void ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
     }
     else
         cout << "Invalid move! This piece cannot move here.";
+
+	turnCount++;
 }
 
 bool ChessBoard::ContainsMove(multimap<int, int> &moves, int r, int c)
@@ -303,6 +306,7 @@ int ChessBoard::check(int turn){
 			kmoves.clear();
 			blacks[i]->ValidMoves(kmoves, this->board);
 			for(mit = kmoves.begin(); mit != kmoves.end();++mit){
+	
 				if(mit->first == krow && mit->second == kcol){
 					
 					return 1;
