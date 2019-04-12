@@ -12,7 +12,6 @@ void ChessBoard::Print()
     string solidRow = "\t  +----+----+----+----+----+----+----+----+";
     string buffRow  = "\t  |    |    |    |    |    |    |    |    |";
 
-
     cout << endl;
     cout << "\t     " << 'A';
     for(int i = 1; i < col_size; i++)

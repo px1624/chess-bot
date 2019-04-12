@@ -1,6 +1,8 @@
-#include <map>
-#include <vector>
+
 #include "piece.h"
+#include <map>
+#include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -17,15 +19,17 @@ Piece::~Piece()
 }
 
 void Piece::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> > &board)
-{    
+{
+    moves.clear();
 }
 
 string Piece::GetPieceStr()
 {
-    string pieceStr = "";
-    pieceStr.push_back(piece_color);
-    pieceStr.push_back(piece_symbol);
-    return pieceStr;
+    ostringstream oss;
+    int fgColor = this->piece_color == 'w' ? 96 : 95;
+    oss.clear();
+    oss << "\033[1;" << fgColor << "m " << piece_symbol << "\033[0m";
+    return oss.str();
 }
 
 char Piece::GetColor()

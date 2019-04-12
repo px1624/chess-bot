@@ -27,12 +27,12 @@ int main(){
 		
 
 		while(!(cin>>userResponse)){
-			cout<<"Invalid Input: Menu Input must be 'A' B' or 'C'"<<endl<<endl;
+			cout<<"Invalid Input: Menu Input must be '1' '2' or '3'"<<endl<<endl;
 			cin.clear();
 		}
 
 		if(userResponse != 1 && userResponse != 2 && userResponse != 3)
-			cout<<"Invalid Input: Menu Input must be 'A' B' or 'C'"<<endl<<endl;
+			cout<<"Invalid Input: Menu Input must be '1' '2' or '3'"<<endl<<endl;
 	
 		if(userResponse == 2)
 			TwoPlayerMode();
@@ -127,10 +127,12 @@ void TwoPlayerMode(){
 		}
         */
 
+        //get moves and print them for debugging purpose
         game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());
 
+        cout << "Valid moves for this piece:\n";
 		for(mit = moves.begin(); mit != moves.end();++mit)
-			cout<< mit->first <<" "<< static_cast<char>(mit->second+'A') <<endl;
+			cout<< 8 - mit->first << " " << static_cast<char>(mit->second + 'A')<<endl;
 
 		game.Move(row, numCol, finRow, numFinCol);	
 	
