@@ -15,7 +15,7 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
 		moves.clear();
 	    if (this->piece_color == 'w'){
 		
-		
+		if(row == 6){		
 
         for(int i = 1; i < 3; i++ ){
 
@@ -27,8 +27,20 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
             }
 
         }
+		}
 	
-		
+		else{
+
+			for(int i = 1; i < 2; i++ ){
+				if(row - i >=0){
+
+					if(board[row - i][col] == nullptr)
+						moves.insert( std::pair<int,int>(row - i, col));
+
+				}
+
+			}
+		}
 
         if(row-1 >= 0 && col - 1 >= 0){
 
@@ -48,7 +60,11 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
         }
     }
 	else if (this->piece_color == 'b'){
-        for(int i = 1; i < 3; i++ ){
+        
+		
+		if(row == 1){
+		
+		for(int i = 1; i < 3; i++ ){
 
             if(row + i <= 7){
 
@@ -58,6 +74,22 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
             }
 
         }
+		}
+		else{
+
+		for(int i = 1; i < 2; i++ ){
+
+            if(row + i <= 7){
+
+                if(board[row + i][col] == nullptr)
+                    moves.insert( std::pair<int,int>(row + i, col));
+
+            }
+
+        }
+
+
+		}
 
         if(row+1 <= (int)board.size() && col - 1 >= 0){
 
