@@ -61,6 +61,123 @@ void ChessBoard::PrintAllValidMoves()
     }
 }
 
+bool ChessBoard::PawnPCheck(int &row, int &col){
+
+	for(int i = 0;i < board[0].size();i++){
+		if( board[0][i] != nullptr && board[0][i]->GetColor() == 'w' && board[0][i]->GetSymbol() == 'P'){
+			row = 0;
+			col = i;
+			return true;
+		}
+	}
+	
+	for(int i = 0;i < board[7].size();i++){
+		if( board[7][i] != nullptr && board[7][i]->GetColor() == 'b' && board[7][i]->GetSymbol() == 'P'){
+			row = 7;
+			col = i;
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+void ChessBoard::PawnPromotion(int row, int col){
+
+	string npiece;
+	char toColor;
+	unsigned int i;
+	cout<<"Pawn Promotion! Please select a piece to switch out the pawn with: "<<endl;
+	cout<<"Please enter 'queen' 'bishop' 'knight' or 'rook'"<<endl;
+	cin>>npiece;
+
+	toColor = board[row][col]->GetColor();
+
+	if(toColor == 'w'){
+		for( i = 0; i < whites.size();i++){
+			if(whites[i] == board[row][col])
+				break;
+		}
+	}
+	else if(toColor == 'b'){
+		
+		for( i = 0; i < blacks.size();i++){
+			if(blacks[i] == board[row][col])
+				break;
+		}
+
+	}
+
+
+	if(npiece == "queen"){
+		
+		if(toColor == 'w'){
+			delete board[row][col];
+			board[row][col] = new Queen(row, col, 'w');
+			whites[i] = board[row][col];
+		}
+		
+		if(toColor == 'b'){
+			delete board[row][col];
+			board[row][col] = new Queen(row, col, 'b');
+			blacks[i] = board[row][col];
+		}
+		
+	}
+	
+	else if(npiece == "bishop"){
+		
+		if(toColor == 'w'){
+			delete board[row][col];
+			board[row][col] = new Bishop(row, col, 'w');
+			whites[i] = board[row][col];
+		}
+		
+		if(toColor == 'b'){
+			delete board[row][col];
+			board[row][col] = new Bishop(row, col, 'b');
+			blacks[i] = board[row][col];
+		}
+		
+	}
+
+	else if(npiece == "knight"){
+		
+		if(toColor == 'w'){
+			delete board[row][col];
+			board[row][col] = new Knight(row, col, 'w');
+			whites[i] = board[row][col];
+		}
+		
+		if(toColor == 'b'){
+			delete board[row][col];
+			board[row][col] = new Knight(row, col, 'b');
+			blacks[i] = board[row][col];
+		}
+		
+	}
+
+	else if(npiece == "rook"){
+		
+		if(toColor == 'w'){
+			delete board[row][col];
+			board[row][col] = new Rook(row, col, 'w');
+			whites[i] = board[row][col];
+		}
+		
+		if(toColor == 'b'){
+			delete board[row][col];
+			board[row][col] = new Rook(row, col, 'b');
+			blacks[i] = board[row][col];
+		}
+		
+	}
+
+
+
+}
+
 ChessBoard::ChessBoard() : turnCount(0), board(row_size, vector<Piece*>(col_size, nullptr))
 {
     Piece* buffer;
@@ -190,6 +307,8 @@ void ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
         board[rTo][cTo] = src;
         //set source to nullptr
         board[rFrom][cFrom] = nullptr;
+
+		board[rTo][cTo]->SetPosition(rTo, cTo);
     }
     else
         cout << "Invalid move! This piece cannot move here.";

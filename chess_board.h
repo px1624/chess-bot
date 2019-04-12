@@ -17,6 +17,8 @@ public:
 	Piece *getPiece(int r, int c);
 	std::vector<std::vector <Piece*> > getBoard();
 	int check(int turn);
+	bool PawnPCheck(int &row, int &col);
+	void PawnPromotion(int row, int col);
 
 private:
     const int row_size = 8;

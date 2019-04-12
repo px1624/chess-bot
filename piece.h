@@ -64,7 +64,8 @@ class Pawn : public Piece
 
 public:
     void ValidMoves(std::multimap<int, int>&moves, const std::vector < std::vector <Piece*> > &board);
-    Pawn(int row, int col, char color);  
+    Pawn(int row, int col, char color); 
+//	int moved;
 };
 
 #endif

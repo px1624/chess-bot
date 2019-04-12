@@ -53,6 +53,7 @@ void TwoPlayerMode(){
     char col;
     int finRow;
     int numFinCol;
+	int PProw, PPcol;
     char finCol;
     int turnCount = 0;
     
@@ -61,7 +62,7 @@ void TwoPlayerMode(){
     multimap <int, int> moves;
     multimap <int, int>::iterator mit;
 
-    for(int i = 0;i<2;i++){
+    for(int i = 0;i<50;i++){
 		
 		game.Print();
         moves.clear();
@@ -108,7 +109,7 @@ void TwoPlayerMode(){
 
             }
         }
-		cout<<finRow<<" "<<numFinCol<<endl;
+//		cout<<finRow<<" "<<numFinCol<<endl;
         /* shouldn't need to check piece because validmoves function is virtual
          *
 		if(game.getSpaceType(row, numCol) == 'P'){
@@ -133,6 +134,9 @@ void TwoPlayerMode(){
 
 		game.Move(row, numCol, finRow, numFinCol);	
 	
+		if(game.PawnPCheck(PProw, PPcol) == true)
+			game.PawnPromotion(PProw, PPcol);
+
 
         turnCount++;
     }
