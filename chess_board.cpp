@@ -308,10 +308,13 @@ void ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
         board[rFrom][cFrom] = nullptr;
 
 		board[rTo][cTo]->SetPosition(rTo, cTo);
-    }
-    else
-        cout << "Invalid move! This piece cannot move here.";
 
+	
+    }
+    else{
+        cout << "Invalid move! This piece cannot move here.";
+		
+	}
 	turnCount++;
 }
 
