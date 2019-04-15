@@ -29,6 +29,7 @@ class King : public Piece
 public:
     King(int row, int col, char color);
     void ValidMoves(std::multimap<int, int>&moves, const std::vector < std::vector <Piece*> > &board);
+    bool isInCheck(const std::vector < std::vector < Piece*> > &board, int r, int c);
 };
 
 class Queen : public Piece
