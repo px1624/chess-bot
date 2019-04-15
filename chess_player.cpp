@@ -73,11 +73,11 @@ void TwoPlayerMode(){
 		game.Print();
         moves.clear();
 		moveCheck = false;
-		check = game.check(turnCount%2+1);
+		check = game.check();
 		if(check == 1)
 			cout<<"CHECK!"<<endl;
 
-        cout<<"P"<<turnCount%2+1<<" please enter your move: \n";
+        cout<<"P"<< (game.IsWhiteTurn()? "1" : "2") <<" please enter your move: \n";
 
         //DATA MUST BE ENTERED IN THE FORM ROWOFYOURPIECE COLOFYOURPIECE ROWOFNEWSPACE COLOFNEWSPACE EX. 2 A 2 B
 		
@@ -251,7 +251,7 @@ void TwoPlayerMode(){
             
             //this shouldn't be neccessary anymore, since validMoves for king does a check
             //for if the target cell is under attack.
-			check = game.check(turnCount%2+1);
+			check = game.check();
 
 			if(check == 1){
 				cout<<"Invalid Move! You must move the king out of check\n";

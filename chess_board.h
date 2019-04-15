@@ -10,13 +10,13 @@ public:
     ~ChessBoard();
     void Print();
     void PrintAllValidMoves();
-    void Move(int rFrom, int cFrom, int rTo, int cTo);
+    bool Move(int rFrom, int cFrom, int rTo, int cTo);
 	char getSpaceColor(int r, int c);
 	char getSpaceType(int r, int c);
 	bool checkNull(int r, int c);
 	Piece *getPiece(int r, int c);
 	std::vector<std::vector <Piece*> > getBoard();
-	int check(int turn);
+	int check();
     int checkmate();
 	bool PawnPCheck(int &row, int &col);
 	void PawnPromotion(int row, int col);
@@ -24,6 +24,7 @@ public:
 	bool ContainsMove(std::multimap<int, int> &moves, int r, int c);
 	void incTurnCount();
     int GetTurnCount();
+    bool IsWhiteTurn();
 
 private:
     const int row_size = 8;

@@ -332,18 +332,21 @@ void ChessBoard::UndoMove(){
 
 }
 
-void ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
+bool ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
 {
-    //turnCount stores the count before the move
-    //0 is white's move because white moves first
-    bool isBlackTurn = turnCount % 2;
     Piece* src = board[rFrom][cFrom];
     multimap<int, int> moves;
     if(src == nullptr)
+    {
         cout << "Invalid move! There is no chess piece on this cell.\n";
+        return false;
+    }
     
-    if((isBlackTurn && src->GetColor() == 'w') || (!isBlackTurn && src->GetColor() == 'b'))
+    if((IsWhiteTurn() && src->GetColor() == 'b') || (!IsWhiteTurn() && src->GetColor() == 'w'))
+    {
         cout << "Invalid move! You can't move another player's piece.\n";
+        return false;
+    }
 
     src->ValidMoves(moves, board);
 
@@ -379,13 +382,19 @@ void ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
         board[rFrom][cFrom] = nullptr;
 
 		board[rTo][cTo]->SetPosition(rTo, cTo);
+
+        //check if king is under attack
+        //if yes undo
+        //if not 
         turnCount++;	
     }
-    else{
+    else
+    {
         cout << "Invalid move! This piece cannot move here.";
-		
+		return false;
 	}
-	
+
+	return true;
 }
 
 void ChessBoard::incTurnCount(){
@@ -467,12 +476,12 @@ std::vector<std::vector <Piece*> > ChessBoard::getBoard(){
 
 }
 
-int ChessBoard::check(int turn){
+int ChessBoard::check(){
 
 	std::multimap<int, int> kmoves;
 	std::multimap<int, int>::iterator mit;
 	int krow, kcol;
-	if(turn == 2){
+	if(!IsWhiteTurn()){
 		
 		for(unsigned int i = 0; i < blacks.size();i++){
 			if(blacks[i]->GetSymbol() == 'K'){
@@ -523,4 +532,14 @@ int ChessBoard::check(int turn){
 int ChessBoard::checkmate()
 {
     return 0;
+}
+
+bool ChessBoard::IsWhiteTurn()
+{
+    //turnCount records the count right before a player's move.
+    //i.e. 0 means white's turn, after white moves, the count is incremented to 1
+    //     1 is black's turn, 2 is white's turn and so on.
+    //
+    //all even turnCounts are whites turn and odds are blacks
+    return (turnCount % 2 == 0);
 }
