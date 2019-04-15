@@ -248,7 +248,9 @@ void TwoPlayerMode(){
     
 
 			game.Move(row, numCol, finRow, numFinCol);	
-	
+            
+            //this shouldn't be neccessary anymore, since validMoves for king does a check
+            //for if the target cell is under attack.
 			check = game.check(turnCount%2+1);
 
 			if(check == 1){
@@ -261,7 +263,7 @@ void TwoPlayerMode(){
 		}
 		
 		
-		game.incTurnCount();
+		//game.incTurnCount();
         turnCount++;
 	}
 	

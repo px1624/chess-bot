@@ -17,11 +17,13 @@ public:
 	Piece *getPiece(int r, int c);
 	std::vector<std::vector <Piece*> > getBoard();
 	int check(int turn);
+    int checkmate();
 	bool PawnPCheck(int &row, int &col);
 	void PawnPromotion(int row, int col);
 	void UndoMove();
 	bool ContainsMove(std::multimap<int, int> &moves, int r, int c);
 	void incTurnCount();
+    int GetTurnCount();
 
 private:
     const int row_size = 8;

@@ -358,6 +358,9 @@ void ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
 
 		prevToRow = rTo;
 		prevToCol = cTo;
+
+        //perhaps we can combine these two if statements
+        //since the conditions are the same
 		if(board[rTo][cTo] == nullptr)
 			prevToColor = 'n';
 		else
@@ -376,8 +379,7 @@ void ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
         board[rFrom][cFrom] = nullptr;
 
 		board[rTo][cTo]->SetPosition(rTo, cTo);
-
-	
+        turnCount++;	
     }
     else{
         cout << "Invalid move! This piece cannot move here.";
@@ -390,6 +392,11 @@ void ChessBoard::incTurnCount(){
 
 	turnCount++;
 
+}
+
+int ChessBoard::GetTurnCount()
+{
+    return turnCount;
 }
 
 bool ChessBoard::ContainsMove(multimap<int, int> &moves, int r, int c)
@@ -513,3 +520,7 @@ int ChessBoard::check(int turn){
 	}
 }
 
+int ChessBoard::checkmate()
+{
+    return 0;
+}
