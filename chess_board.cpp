@@ -282,6 +282,56 @@ ChessBoard::~ChessBoard()
     whites.clear();
 }
 
+void ChessBoard::UndoMove(){
+
+	board[prevFromRow][prevFromCol] = board[prevToRow][ prevToCol];
+	board[prevFromRow][prevFromCol]->SetPosition(prevFromRow, prevFromCol);
+
+	if(prevToSymbol == 'P'){
+		board[prevToRow][ prevToCol] = new Pawn(prevToRow,  prevToCol, prevToColor);
+		if(prevToColor == 'w')
+			whites.push_back(board[prevToRow][ prevToCol]);
+		else if(prevToColor == 'b')
+			blacks.push_back(board[prevToRow][ prevToCol]);
+	}
+
+	else if(prevToSymbol == 'B'){
+		board[prevToRow][ prevToCol] = new Bishop(prevToRow,  prevToCol, prevToColor);
+		if(prevToColor == 'w')
+			whites.push_back(board[prevToRow][ prevToCol]);
+		else if(prevToColor == 'b')
+			blacks.push_back(board[prevToRow][ prevToCol]);
+	}
+
+	else if(prevToSymbol == 'N'){
+		board[prevToRow][ prevToCol] = new Knight(prevToRow,  prevToCol, prevToColor);
+		if(prevToColor == 'w')
+			whites.push_back(board[prevToRow][ prevToCol]);
+		else if(prevToColor == 'b')
+			blacks.push_back(board[prevToRow][ prevToCol]);
+	}
+
+	else if(prevToSymbol == 'R'){
+		board[prevToRow][ prevToCol] = new Rook(prevToRow,  prevToCol, prevToColor);
+		if(prevToColor == 'w')
+			whites.push_back(board[prevToRow][ prevToCol]);
+		else if(prevToColor == 'b')
+			blacks.push_back(board[prevToRow][ prevToCol]);
+	}
+	
+	else if(prevToSymbol == 'Q'){
+		board[prevToRow][ prevToCol] = new Queen(prevToRow,  prevToCol, prevToColor);
+		if(prevToColor == 'w')
+			whites.push_back(board[prevToRow][ prevToCol]);
+		else if(prevToColor == 'b')
+			blacks.push_back(board[prevToRow][ prevToCol]);
+	}
+	else
+		board[prevToRow][ prevToCol] = nullptr;
+
+
+}
+
 void ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
 {
     //turnCount stores the count before the move
@@ -299,7 +349,25 @@ void ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
 
     //if user's move is contained within the chosen piece's valid moves map
     if(ContainsMove(moves, rTo, cTo))
-    {
+    {	
+
+		prevFromRow = rFrom;
+		prevFromCol = cFrom;
+		prevFromColor = board[rFrom][cFrom]->GetColor();
+		prevFromSymbol = board[rFrom][cFrom]->GetSymbol();
+
+		prevToRow = rTo;
+		prevToCol = cTo;
+		if(board[rTo][cTo] == nullptr)
+			prevToColor = 'n';
+		else
+			prevToColor = board[rTo][cTo]->GetColor();
+
+		if(board[rTo][cTo] == nullptr)
+			prevToSymbol = 'Z';
+		else
+			prevToSymbol = board[rTo][cTo]->GetSymbol();
+
         //remove destination piece
         RemovePiece(rTo, cTo);
         //move source to destination
@@ -315,7 +383,13 @@ void ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
         cout << "Invalid move! This piece cannot move here.";
 		
 	}
+	
+}
+
+void ChessBoard::incTurnCount(){
+
 	turnCount++;
+
 }
 
 bool ChessBoard::ContainsMove(multimap<int, int> &moves, int r, int c)

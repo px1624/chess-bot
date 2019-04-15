@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <sstream>
 #include <string>
 #include "piece.h"
 #include "chess_board.h"
@@ -56,8 +57,10 @@ void TwoPlayerMode(){
 	int PProw, PPcol;
     char finCol;
 	bool moveCheck = false;
-	bool check;
+	bool check = 0;
     int turnCount = 0;
+	istringstream ss;
+	string s;
     
 
     ChessBoard game;
@@ -66,6 +69,7 @@ void TwoPlayerMode(){
 
     for(int i = 0;i<50;i++){
 		
+	
 		game.Print();
         moves.clear();
 		moveCheck = false;
@@ -76,26 +80,43 @@ void TwoPlayerMode(){
         cout<<"P"<<turnCount%2+1<<" please enter your move: \n";
 
         //DATA MUST BE ENTERED IN THE FORM ROWOFYOURPIECE COLOFYOURPIECE ROWOFNEWSPACE COLOFNEWSPACE EX. 2 A 2 B
-//		if(check == 0){
+		
+		if(check == 0){
 		while(moveCheck == false){
+			
+			
+			cin>>s;
 
+			if(s == "QUIT")
+				return;
 
-	        cin>> row >> col >> finRow >> finCol;
+			row = stoi(s);
+
+			cin>>col>>finRow>>finCol;
 
 			row = 8 - row;
 			finRow = 8 - finRow;
 		     numCol = col - 'A';
 			numFinCol = finCol - 'A';
 
+			cout<<row << numCol << finRow << numFinCol <<endl;
 
 //		cout<<row<<" "<<numCol<<endl;
         //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
 	        if(turnCount%2+1 == 1){
 			    while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'b'){
 					cout<<"Please enter a valid piece\n";
+					
+					cin>>s;
 
-	                cin>> row >> col >> finRow >> finCol;
+					if(s == "QUIT")
+						return;
 
+					row = stoi(s);
+
+					cin>>col>>finRow>>finCol;
+
+					
 					row = 8 - row;
 					finRow = 8 - finRow;
 		            numCol = col - 'A';
@@ -106,9 +127,16 @@ void TwoPlayerMode(){
 	        else if(turnCount%2+1 == 2){
 		        while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'w'){
 					cout<<"Please enter a valid piece\n";
+					
+					cin>>s;
 
-					cin>> row >> col >> finRow >> finCol;
+					if(s == "QUIT")
+						return;
 
+					row = stoi(s);
+
+					cin>>col>>finRow>>finCol;
+					
 					row = 8 - row;
 					finRow = 8 - finRow;
 					numCol = col - 'A';
@@ -117,13 +145,6 @@ void TwoPlayerMode(){
 			    }
 			}
 		
-//		}
-//		if(check == 1){
-			
-//			if(turnCount%2+1 == 1){
-//			}
-//		}
-
 
 			game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
 
@@ -133,23 +154,6 @@ void TwoPlayerMode(){
 				cout << "Invalid move! This piece cannot move here."<<endl;
 
 		}
-//		cout<<finRow<<" "<<numFinCol<<endl;
-        /* shouldn't need to check piece because validmoves function is virtual
-         *
-		if(game.getSpaceType(row, numCol) == 'P'){
-			pawnptr = new Pawn(row, numCol, game.getSpaceColor(row, numCol));
-			pawnptr->ValidMoves(moves, game.getBoard());
-			delete pawnptr;
-
-		}
-		
-		if(game.getSpaceType(row, numCol) == 'N'){
-			knightptr = new Knight(row, numCol, game.getSpaceColor(row, numCol));
-			knightptr->ValidMoves(moves, game.getBoard());
-			delete knightptr;
-
-		}
-        */
 
         //get moves and print them for debugging purpose
     
@@ -163,8 +167,103 @@ void TwoPlayerMode(){
 		if(game.PawnPCheck(PProw, PPcol) == true)
 			game.PawnPromotion(PProw, PPcol);
 
+		}
+		if(check == 1){
+		
+			while(check == 1){
+				
+				moveCheck = false;
+				while(moveCheck == false){
+			
+			
+				cin>>s;
 
+				if(s == "QUIT")
+					return;
+
+				row = stoi(s);
+
+				cin>>col>>finRow>>finCol;
+
+				row = 8 - row;
+				finRow = 8 - finRow;
+			     numCol = col - 'A';
+				numFinCol = finCol - 'A';
+
+				cout<<row << numCol << finRow << numFinCol <<endl;
+        //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
+		        if(turnCount%2+1 == 1){
+				    while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'b'){
+						cout<<"Please enter a valid piece\n";
+					
+						cin>>s;
+
+						if(s == "QUIT")
+							return;
+
+						row = stoi(s);
+
+						cin>>col>>finRow>>finCol;
+
+					
+						row = 8 - row;
+						finRow = 8 - finRow;
+					    numCol = col - 'A';
+						numFinCol = finCol - 'A';
+			        }
+		        }
+			    //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
+		        else if(turnCount%2+1 == 2){
+			        while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'w'){
+						cout<<"Please enter a valid piece\n";
+						
+						cin>>s;
+
+						if(s == "QUIT")
+							return;
+
+						row = stoi(s);
+
+						cin>>col>>finRow>>finCol;
+					
+						row = 8 - row;
+						finRow = 8 - finRow;
+						numCol = col - 'A';
+						numFinCol = finCol - 'A';
+
+					}
+				}
+		
+
+				game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
+
+				moveCheck = game.ContainsMove(moves, finRow, numFinCol);
+
+				if(moveCheck == false)
+					cout << "Invalid move! This piece cannot move here."<<endl;
+
+			}
+
+        //get moves and print them for debugging purpose
+    
+
+			game.Move(row, numCol, finRow, numFinCol);	
+	
+			check = game.check(turnCount%2+1);
+
+			if(check == 1){
+				cout<<"Invalid Move! You must move the king out of check\n";
+				game.UndoMove();
+			}
+			
+			}
+
+		}
+		
+		
+		game.incTurnCount();
         turnCount++;
-    }
+	}
+	
 
 }

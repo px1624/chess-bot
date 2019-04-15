@@ -19,7 +19,9 @@ public:
 	int check(int turn);
 	bool PawnPCheck(int &row, int &col);
 	void PawnPromotion(int row, int col);
+	void UndoMove();
 	bool ContainsMove(std::multimap<int, int> &moves, int r, int c);
+	void incTurnCount();
 
 private:
     const int row_size = 8;
@@ -29,6 +31,16 @@ private:
     std::vector<Piece*> whites;
     std::vector<std::vector <Piece*> > board;
     void RemovePiece(int r, int c);
+	int prevToRow;
+	int prevToCol;
+	char prevToColor;
+	char prevToSymbol;
+
+	int prevFromRow;
+	int prevFromCol;
+	char prevFromColor;
+	char prevFromSymbol;
+
 };
 
 #endif
