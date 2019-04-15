@@ -1,4 +1,5 @@
 #include "piece.h"
+#include <cmath>
 #include <utility>
 #include <iostream>
 using namespace std;
@@ -56,14 +57,22 @@ bool King::isInCheck(const vector<vector<Piece*> > &board, int r, int c)
             if(board[i][j] != nullptr && board[i][j]->GetColor() != this->piece_color)
             {
                 //cout << i << " " << j << endl << flush;
-                board[i][j]->ValidMoves(moves, newBoard);
-                //cout << "got valid moves\n" << flush;
-                for(it = moves.begin(); it != moves.end(); ++it)
+                if(board[i][j]->GetSymbol() == 'K')
                 {
-                    if(it->first == r && it->second == c)
-                    {
-                        cout << "king cannot move to " << r << " " << c << endl;
+                    if((abs(r - i) <= 1) && (abs(c - j) <= 1))
                         return true;
+                }
+                else
+                {
+                    board[i][j]->ValidMoves(moves, newBoard);
+                    //cout << "got valid moves\n" << flush;
+                    for(it = moves.begin(); it != moves.end(); ++it)
+                    {
+                        if(it->first == r && it->second == c)
+                        {
+                            cout << "king cannot move to " << r << " " << c << endl;
+                            return true;
+                        }
                     }
                 }
             }
