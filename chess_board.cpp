@@ -7,6 +7,53 @@
 
 using namespace std;
 
+bool ChessBoard::CheckMate(){
+
+	multimap<int, int> moves;
+	multimap<int, int>::iterator mit;
+	int r, c;
+	if(IsWhiteTurn()){
+
+		for(int i = 0;i < whites.size();i++){
+			moves.clear();
+			whites[i]->ValidMoves(moves, this->board);
+			whites[i]->GetPosition(r, c);
+			for(mit = moves.begin();mit != moves.end();++mit){
+				
+				Move(r, c, mit->first, mit->second);
+				if(check() == 0){
+					UndoMove();
+					return false;
+				}
+				UndoMove();
+			}
+
+		}
+		return true;
+
+	}
+	else{
+
+		for(int i = 0;i < blacks.size();i++){
+			moves.clear();
+			blacks[i]->ValidMoves(moves, this->board);
+			blacks[i]->GetPosition(r, c);
+			for(mit = moves.begin();mit != moves.end();++mit){
+				
+				Move(r, c, mit->first, mit->second);
+				if(check() == 0){
+					UndoMove();
+					return false;
+				}
+				UndoMove();
+			}
+
+		}
+		return true;
+	}
+
+}
+
 void ChessBoard::Print()
 {
     string solidRow = "\t  +----+----+----+----+----+----+----+----+";

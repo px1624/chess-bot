@@ -172,6 +172,11 @@ void TwoPlayerMode(){
 		
 			while(check == 1){
 				
+				if(game.CheckMate() == true){
+					cout<<"P"<<turnCount%2+1<<" wins!"<<endl;
+					return;
+				}
+
 				moveCheck = false;
 				while(moveCheck == false){
 			
