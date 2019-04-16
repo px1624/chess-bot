@@ -263,7 +263,7 @@ void TwoPlayerMode(){
 		}
 		
 		
-		//game.incTurnCount();
+		game.incTurnCount();
         turnCount++;
 	}
 	

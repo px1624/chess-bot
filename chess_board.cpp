@@ -382,11 +382,6 @@ bool ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
         board[rFrom][cFrom] = nullptr;
 
 		board[rTo][cTo]->SetPosition(rTo, cTo);
-
-        //check if king is under attack
-        //if yes undo
-        //if not 
-        turnCount++;	
     }
     else
     {
@@ -483,14 +478,12 @@ int ChessBoard::check(){
 	int krow, kcol;
 	if(!IsWhiteTurn()){
 		
-        cout << "black turn" << endl << flush;
 		for(unsigned int i = 0; i < blacks.size();i++){
 			if(blacks[i]->GetSymbol() == 'K'){
 				blacks[i]->GetPosition(krow, kcol);
 				break;
 			}
 		}
-        cout << "check valid moves" << endl << flush;
 		for(unsigned int i = 0;i < whites.size();i++){
 			
 			kmoves.clear();
@@ -506,7 +499,6 @@ int ChessBoard::check(){
 	}
 	else{
 		
-        cout << "white turn" << endl << flush;
 		for(unsigned int i = 0; i < whites.size();i++){
 			if(whites[i]->GetSymbol() == 'K'){
 				whites[i]->GetPosition(krow, kcol);
@@ -514,20 +506,10 @@ int ChessBoard::check(){
 			}
 		}
 	
-        cout << "check valid moves" << endl << flush;
 		for(unsigned int i = 0;i < blacks.size();i++){
 			
 			kmoves.clear();
-            //debug
-            int tmpR, tmpC;
-            blacks[i]->GetPosition(tmpR, tmpC);
-            cout << tmpR << " " << tmpC <<endl <<flush;
-            if(tmpR == 1 && tmpC == 4)
-            {
-                cout << "break here!\n"<<flush;
-            }
 			blacks[i]->ValidMoves(kmoves, this->board);
-            cout << "got valid moves!\n" << flush;
 			for(mit = kmoves.begin(); mit != kmoves.end();++mit){
 	
 				if(mit->first == krow && mit->second == kcol){
