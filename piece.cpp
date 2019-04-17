@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Piece::Piece(int row, int col, char color, char symbol, int pVal):piece_symbol(symbol), piece_color(color), row(row), col(col), piece_value(pVal)
+Piece::Piece(int row, int col, char color, char symbol, int pVal):piece_symbol(symbol), piece_color(color), row(row), col(col), piece_value(pVal), move_count(0)
 {
     if(color == 'b')
     {
@@ -54,4 +54,22 @@ void Piece::GetPosition(int &r, int &c)
 	c = col;
 }
 
+void Piece::IncMoveCount()
+{
+    ++move_count;
+}
 
+void Piece::DecMoveCount()
+{
+    --move_count;
+}
+
+int Piece::GetMoveCount()
+{
+    return move_count;
+}
+
+void Piece::SetMoveCount(int moveCount)
+{
+    this->move_count = moveCount;
+}

@@ -15,6 +15,10 @@ class Piece
     char GetSymbol();
     void SetPosition(int r, int c);
     void GetPosition(int &r, int &c);
+    void IncMoveCount();
+    void DecMoveCount();
+    int GetMoveCount();
+    void SetMoveCount(int moveCount);
 
 protected:
     char piece_symbol;
@@ -22,6 +26,7 @@ protected:
     int row;
     int col;
     int piece_value;
+    int move_count;
 };
 
 class King : public Piece

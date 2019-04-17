@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include <map>
+#include <cmath>
 
 using namespace std;
 
@@ -264,15 +265,18 @@ ChessBoard::ChessBoard() : turnCount(0), board(row_size, vector<Piece*>(col_size
         }
         else if(i == 1 || i == 6)
         {
-            buffer = new Knight(0, i, 'b');
+            buffer = nullptr;
+            //buffer = new Knight(0, i, 'b');
         }
         else if(i == 2 || i == 5)
         {
-            buffer = new Bishop(0, i, 'b');
+            buffer = nullptr;
+            //buffer = new Bishop(0, i, 'b');
         }
         else if(i == 3)
         {
-            buffer = new Queen(0, i, 'b');
+            buffer = nullptr;
+            //buffer = new Queen(0, i, 'b');
         }
         else if(i == 4)
         {
@@ -280,7 +284,8 @@ ChessBoard::ChessBoard() : turnCount(0), board(row_size, vector<Piece*>(col_size
         }
 
         board[0][i] = buffer;
-        blacks.push_back(buffer);
+        if (buffer != nullptr)
+            blacks.push_back(buffer);
     }
     
     //place white pieces
@@ -292,15 +297,18 @@ ChessBoard::ChessBoard() : turnCount(0), board(row_size, vector<Piece*>(col_size
         }
         else if(i == 1 || i == 6)
         {
-            buffer = new Knight(7, i, 'w');
+            buffer = nullptr;
+            //buffer = new Knight(7, i, 'w');
         }
         else if(i == 2 || i == 5)
         {
-            buffer = new Bishop(7, i, 'w');
+            buffer = nullptr;
+            //buffer = new Bishop(7, i, 'w');
         }
         else if(i == 3)
         {
-            buffer = new Queen(7, i, 'w');
+            buffer = nullptr;
+            //buffer = new Queen(7, i, 'w');
         }
         else if(i == 4)
         {
@@ -308,7 +316,8 @@ ChessBoard::ChessBoard() : turnCount(0), board(row_size, vector<Piece*>(col_size
         }
 
         board[7][i] = buffer;
-        whites.push_back(buffer);
+        if(buffer != nullptr)
+            whites.push_back(buffer);
     }
 
 }
@@ -337,6 +346,7 @@ void ChessBoard::UndoMove(){
 
 	board[prevFromRow][prevFromCol] = board[prevToRow][ prevToCol];
 	board[prevFromRow][prevFromCol]->SetPosition(prevFromRow, prevFromCol);
+    board[prevFromRow][prevFromCol]->DecMoveCount();
 
 	if(prevToSymbol == 'P'){
 		board[prevToRow][ prevToCol] = new Pawn(prevToRow,  prevToCol, prevToColor);
@@ -380,7 +390,8 @@ void ChessBoard::UndoMove(){
 	else
 		board[prevToRow][ prevToCol] = nullptr;
 
-
+    if(board[prevToRow][prevToCol] != nullptr)
+        board[prevToRow][prevToCol]->SetMoveCount(prevToMoveCount);
 }
 
 bool ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
@@ -412,18 +423,18 @@ bool ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
 
 		prevToRow = rTo;
 		prevToCol = cTo;
-
-        //perhaps we can combine these two if statements
-        //since the conditions are the same
 		if(board[rTo][cTo] == nullptr)
+        {
 			prevToColor = 'n';
+            prevToSymbol = 'Z';
+            prevToMoveCount = -1;
+        }
 		else
+        {
 			prevToColor = board[rTo][cTo]->GetColor();
-
-		if(board[rTo][cTo] == nullptr)
-			prevToSymbol = 'Z';
-		else
-			prevToSymbol = board[rTo][cTo]->GetSymbol();
+            prevToSymbol = board[rTo][cTo]->GetSymbol();
+            prevToMoveCount = board[rTo][cTo]->GetMoveCount();
+        }
 
         //remove destination piece
         RemovePiece(rTo, cTo);
@@ -433,6 +444,21 @@ bool ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
         board[rFrom][cFrom] = nullptr;
 
 		board[rTo][cTo]->SetPosition(rTo, cTo);
+        
+        src->IncMoveCount();
+        
+        //if king performed a castle move
+        //move rook as well
+        if(src->GetSymbol() == 'K' && abs(cTo - cFrom) > 1)
+        {
+            int rOldCol = (cTo > cFrom)? 7 : 0;
+            int rNewCol = (rOldCol == 7)? rOldCol - 2 : rOldCol + 3;
+            Piece* rook = board[rFrom][rOldCol];
+            board[rFrom][rNewCol] = rook;
+            board[rFrom][rOldCol] = nullptr;
+            rook->SetPosition(rFrom, rNewCol);
+            rook->IncMoveCount();
+        }
     }
     else
     {
@@ -572,11 +598,6 @@ int ChessBoard::check(){
 		return 0;
 
 	}
-}
-
-int ChessBoard::checkmate()
-{
-    return 0;
 }
 
 bool ChessBoard::IsWhiteTurn()

@@ -17,7 +17,6 @@ public:
 	Piece *getPiece(int r, int c);
 	std::vector<std::vector <Piece*> > getBoard();
 	int check();
-    int checkmate();
 	bool PawnPCheck(int &row, int &col);
 	void PawnPromotion(int row, int col);
 	void UndoMove();
@@ -40,6 +39,7 @@ private:
 	int prevToCol;
 	char prevToColor;
 	char prevToSymbol;
+    int prevToMoveCount;
 
 	int prevFromRow;
 	int prevFromCol;

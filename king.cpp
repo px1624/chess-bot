@@ -40,6 +40,58 @@ void King::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> > &
             }
         }
     }
+
+    //chek for castle
+    //king never moved
+    if(move_count == 0)
+    {
+        //get both rooks
+        Piece* kSideR = board[row][7];
+        Piece* qSideR = board[row][0];
+        
+        //king side castle
+        if(kSideR != nullptr &&
+           kSideR->GetMoveCount() == 0 &&
+           kSideR->GetSymbol() == 'R' &&
+           kSideR->GetColor() == this->piece_color)
+        {
+            //no piece should be between the king and the rook
+            if(board[row][col + 1] == nullptr && board[row][col + 2] == nullptr)
+            {
+                //the king is not currently in check
+                //and the king does not move through a square that is under attack
+                if(!isInCheck(board, row, col) &&
+                   !isInCheck(board, row, col + 1) &&
+                   !isInCheck(board, row, col + 2))
+                {
+                    moves.insert(make_pair(row, col + 2));
+                }
+            }
+        }
+
+        //queen side castle
+        if(qSideR != nullptr &&
+           qSideR->GetMoveCount() == 0 &&
+           qSideR->GetSymbol() == 'R' &&
+           qSideR->GetColor() == this->piece_color)
+        {
+            //no piece should be between the king and the rook
+            if(board[row][col - 1] == nullptr &&
+               board[row][col - 2] == nullptr &&
+               board[row][col - 3] == nullptr)
+            {
+                //the king is not currently in check
+                //and the king does not move through a square that is under attack
+                if(!isInCheck(board, row, col) &&
+                   !isInCheck(board, row, col - 1) &&
+                   !isInCheck(board, row, col - 2))
+                {
+                    moves.insert(make_pair(row, col - 2));
+                }
+            }
+
+        }
+    }
 }
 
 
