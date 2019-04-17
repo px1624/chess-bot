@@ -23,9 +23,11 @@ bool ChessBoard::CheckMate(){
 				Move(r, c, mit->first, mit->second);
 				if(check() == 0){
 					UndoMove();
+					cout<<r<<" "<<c<<"can move to "<<mit->first<<" "<<mit->second<<endl;
 					return false;
 				}
 				UndoMove();
+				cout<<"cannot move to "<<mit->first<<" "<<mit->second<<endl;
 			}
 
 		}
@@ -43,9 +45,11 @@ bool ChessBoard::CheckMate(){
 				Move(r, c, mit->first, mit->second);
 				if(check() == 0){
 					UndoMove();
+					cout<<r<<" "<<c<<"can move to "<<mit->first<<" "<<mit->second<<endl;
 					return false;
 				}
 				UndoMove();
+				cout<<"cannot move to "<<mit->first<<" "<<mit->second<<endl;
 			}
 
 		}

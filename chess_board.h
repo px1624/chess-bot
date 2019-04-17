@@ -26,6 +26,7 @@ public:
     int GetTurnCount();
     bool IsWhiteTurn();
 	bool CheckMate();
+//	bool StaleMate();
 
 private:
     const int row_size = 8;

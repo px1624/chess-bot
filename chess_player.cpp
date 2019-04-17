@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <sstream>
 #include <string>
 #include "piece.h"
 #include "chess_board.h"
@@ -57,9 +56,9 @@ void TwoPlayerMode(){
 	int PProw, PPcol;
     char finCol;
 	bool moveCheck = false;
+	bool newCheck = 1;
 	bool check = 0;
     int turnCount = 0;
-	istringstream ss;
 	string s;
     
 
@@ -72,6 +71,7 @@ void TwoPlayerMode(){
 	
 		game.Print();
         moves.clear();
+		newCheck = 1;
 		moveCheck = false;
 		check = game.check();
 		if(check == 1)
@@ -82,8 +82,13 @@ void TwoPlayerMode(){
         //DATA MUST BE ENTERED IN THE FORM ROWOFYOURPIECE COLOFYOURPIECE ROWOFNEWSPACE COLOFNEWSPACE EX. 2 A 2 B
 		
 		if(check == 0){
-		while(moveCheck == false){
+		while(moveCheck == false || newCheck == 1){
 			
+			if(game.CheckMate() == true){
+				cout<<"P"<<(turnCount+1)%2+1<<" wins by Stalemate!"<<endl;
+				return;
+			}
+
 			
 			cin>>s;
 
@@ -99,7 +104,7 @@ void TwoPlayerMode(){
 		     numCol = col - 'A';
 			numFinCol = finCol - 'A';
 
-			cout<<row << numCol << finRow << numFinCol <<endl;
+//			cout<<row << numCol << finRow << numFinCol <<endl;
 
 //		cout<<row<<" "<<numCol<<endl;
         //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
@@ -150,9 +155,18 @@ void TwoPlayerMode(){
 
 			moveCheck = game.ContainsMove(moves, finRow, numFinCol);
 
+
+			//checks to make sure the move is valid
 			if(moveCheck == false)
 				cout << "Invalid move! This piece cannot move here."<<endl;
-
+			
+			//makes sure that the move does not put the king in danger
+			game.Move(row, numCol, finRow, numFinCol);
+			newCheck = game.check();
+			if(newCheck == 1){
+				cout <<"Cannot put the king in danger!"<<endl;
+			}
+			game.UndoMove();
 		}
 
         //get moves and print them for debugging purpose

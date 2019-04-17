@@ -24,6 +24,8 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
 
                 if(board[row - i][col] == nullptr)
                     moves.insert( std::pair<int,int>(row - i, col));
+				if(board[row - i][col] != nullptr)
+					break;
 
             }
 
@@ -72,6 +74,10 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
 
                 if(board[row + i][col] == nullptr)
                     moves.insert( std::pair<int,int>(row + i, col));
+
+				if(board[row + i][col] != nullptr)
+					break;
+
 
             }
 
