@@ -173,8 +173,7 @@ void TwoPlayerMode(){
                 bool moved = false;
                 if(tmp != nullptr && tmp->GetSymbol() != 'K')
                 {
-                    moved = true;
-                    game.Move(row, numCol, finRow, numFinCol);
+                    moved = game.Move(row, numCol, finRow, numFinCol);
                 }
                 newCheck = game.check();
                 if(newCheck == 1){

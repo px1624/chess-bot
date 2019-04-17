@@ -265,18 +265,15 @@ ChessBoard::ChessBoard() : turnCount(0), board(row_size, vector<Piece*>(col_size
         }
         else if(i == 1 || i == 6)
         {
-            buffer = nullptr;
-            //buffer = new Knight(0, i, 'b');
+            buffer = new Knight(0, i, 'b');
         }
         else if(i == 2 || i == 5)
         {
-            buffer = nullptr;
-            //buffer = new Bishop(0, i, 'b');
+            buffer = new Bishop(0, i, 'b');
         }
         else if(i == 3)
         {
-            buffer = nullptr;
-            //buffer = new Queen(0, i, 'b');
+            buffer = new Queen(0, i, 'b');
         }
         else if(i == 4)
         {
@@ -297,18 +294,15 @@ ChessBoard::ChessBoard() : turnCount(0), board(row_size, vector<Piece*>(col_size
         }
         else if(i == 1 || i == 6)
         {
-            buffer = nullptr;
-            //buffer = new Knight(7, i, 'w');
+            buffer = new Knight(7, i, 'w');
         }
         else if(i == 2 || i == 5)
         {
-            buffer = nullptr;
-            //buffer = new Bishop(7, i, 'w');
+            buffer = new Bishop(7, i, 'w');
         }
         else if(i == 3)
         {
-            buffer = nullptr;
-            //buffer = new Queen(7, i, 'w');
+            buffer = new Queen(7, i, 'w');
         }
         else if(i == 4)
         {
