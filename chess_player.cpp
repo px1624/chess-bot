@@ -167,13 +167,21 @@ void TwoPlayerMode(){
                     cout << "Invalid move! This piece cannot move here."<<endl;
 
                 //makes sure that the move does not put the king in danger
-                game.Move(row, numCol, finRow, numFinCol);
+                //do not need to check if king is moving because king
+                //by default cannot move into a check
+                Piece* tmp = game.getPiece(row, numCol);
+                bool moved = false;
+                if(tmp != nullptr && tmp->GetSymbol() != 'K')
+                {
+                    moved = true;
+                    game.Move(row, numCol, finRow, numFinCol);
+                }
                 newCheck = game.check();
                 if(newCheck == 1){
                     cout <<"Cannot put the king in danger!"<<endl;
-                    game.UndoMove();
                 }
-                //game.UndoMove();
+                if(moved)
+                    game.UndoMove();
             }
 
             //get moves and print them for debugging purpose
