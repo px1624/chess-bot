@@ -21,14 +21,14 @@ bool ChessBoard::CheckMate(){
 			whites[i]->GetPosition(r, c);
 			for(mit = moves.begin();mit != moves.end();++mit){
 				
-				Move(r, c, mit->first, mit->second);
+				Move(r, c, mit->first, mit->second, false);
 				if(check() == 0){
 					UndoMove();
-					cout<<r<<" "<<c<<"can move to "<<mit->first<<" "<<mit->second<<endl;
+				//	cout<<r<<" "<<c<<"can move to "<<mit->first<<" "<<mit->second<<endl;
 					return false;
 				}
 				UndoMove();
-				cout<<"cannot move to "<<mit->first<<" "<<mit->second<<endl;
+			//	cout<<"cannot move to "<<mit->first<<" "<<mit->second<<endl;
 			}
 
 		}
@@ -43,20 +43,44 @@ bool ChessBoard::CheckMate(){
 			blacks[i]->GetPosition(r, c);
 			for(mit = moves.begin();mit != moves.end();++mit){
 				
-				Move(r, c, mit->first, mit->second);
+				Move(r, c, mit->first, mit->second, false);
 				if(check() == 0){
 					UndoMove();
-					cout<<r<<" "<<c<<"can move to "<<mit->first<<" "<<mit->second<<endl;
+				//	cout<<r<<" "<<c<<"can move to "<<mit->first<<" "<<mit->second<<endl;
 					return false;
 				}
 				UndoMove();
-				cout<<"cannot move to "<<mit->first<<" "<<mit->second<<endl;
+		//		cout<<"cannot move to "<<mit->first<<" "<<mit->second<<endl;
 			}
 
 		}
 		return true;
 	}
 
+}
+
+void ChessBoard::EPCleanup(){
+
+	int r, c;
+	if(IsWhiteTurn()){
+		for(int i = 0; i < whites.size();i++){
+			if(whites[i]->GetSymbol() == 'P'){
+				whites[i]->GetPosition(r, c);
+				whites[i]->SetPrevRow(r);
+				
+			}
+		}
+	}
+
+	else{
+		for(int i = 0; i < blacks.size();i++){
+			if(blacks[i]->GetSymbol() == 'P'){
+				blacks[i]->GetPosition(r, c);
+				blacks[i]->SetPrevRow(r);
+				
+			}
+		}
+	}
 }
 
 void ChessBoard::Print()
@@ -388,8 +412,9 @@ void ChessBoard::UndoMove(){
         board[prevToRow][prevToCol]->SetMoveCount(prevToMoveCount);
 }
 
-bool ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
+bool ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo, bool EPFlag)
 {
+	bool EFlag;
     Piece* src = board[rFrom][cFrom];
     multimap<int, int> moves;
     if(src == nullptr)
@@ -412,6 +437,7 @@ bool ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
 
 		prevFromRow = rFrom;
 		prevFromCol = cFrom;
+		src->SetPrevRow(rFrom);
 		prevFromColor = board[rFrom][cFrom]->GetColor();
 		prevFromSymbol = board[rFrom][cFrom]->GetSymbol();
 
@@ -430,6 +456,12 @@ bool ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
             prevToMoveCount = board[rTo][cTo]->GetMoveCount();
         }
 
+		if(src->GetSymbol() == 'P' && abs(cTo - cFrom) > 0 && board[rTo][cTo] == nullptr && EPFlag == true){
+			EFlag = true;
+		}
+		else 
+			EFlag = false;
+		
         //remove destination piece
         RemovePiece(rTo, cTo);
         //move source to destination
@@ -440,7 +472,7 @@ bool ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
 		board[rTo][cTo]->SetPosition(rTo, cTo);
         
         src->IncMoveCount();
-        
+		
         //if king performed a castle move
         //move rook as well
         if(src->GetSymbol() == 'K' && abs(cTo - cFrom) > 1)
@@ -453,10 +485,15 @@ bool ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo)
             rook->SetPosition(rFrom, rNewCol);
             rook->IncMoveCount();
         }
+		
+		if(EFlag == true){
+			RemovePiece(rFrom, cTo);
+		}
+
     }
     else
     {
-        cout << "Invalid move! This piece cannot move here.";
+        cout << " 2nd Invalid move! This piece cannot move here."<<endl;
 		return false;
 	}
 

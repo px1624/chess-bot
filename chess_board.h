@@ -10,7 +10,7 @@ public:
     ~ChessBoard();
     void Print();
     void PrintAllValidMoves();
-    bool Move(int rFrom, int cFrom, int rTo, int cTo);
+    bool Move(int rFrom, int cFrom, int rTo, int cTo, bool EPFlag);
 	char getSpaceColor(int r, int c);
 	char getSpaceType(int r, int c);
 	bool checkNull(int r, int c);
@@ -25,7 +25,7 @@ public:
     int GetTurnCount();
     bool IsWhiteTurn();
 	bool CheckMate();
-//	bool StaleMate();
+	void EPCleanup();
 
 private:
     const int row_size = 8;

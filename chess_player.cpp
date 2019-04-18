@@ -76,6 +76,7 @@ void TwoPlayerMode(){
         moves.clear();
         newCheck = 1;
         moveCheck = false;
+		game.EPCleanup();
         check = game.check();
         if(check == 1)
             cout<<"CHECK!"<<endl;
@@ -173,7 +174,7 @@ void TwoPlayerMode(){
                 bool moved = false;
                 if(tmp != nullptr && tmp->GetSymbol() != 'K')
                 {
-                    moved = game.Move(row, numCol, finRow, numFinCol);
+                    moved = game.Move(row, numCol, finRow, numFinCol, false);
                 }
                 newCheck = game.check();
                 if(newCheck == 1){
@@ -185,13 +186,12 @@ void TwoPlayerMode(){
 
             //get moves and print them for debugging purpose
 
-
+		
             cout << "Valid moves for this piece:\n";
             for(mit = moves.begin(); mit != moves.end();++mit)
                 cout<< 8 - mit->first << " " << static_cast<char>(mit->second + 'A')<<endl;
 
-            game.Move(row, numCol, finRow, numFinCol);	
-
+            game.Move(row, numCol, finRow, numFinCol, true);	
             if(game.PawnPCheck(PProw, PPcol) == true)
                 game.PawnPromotion(PProw, PPcol);
 
@@ -283,7 +283,7 @@ void TwoPlayerMode(){
                 //get moves and print them for debugging purpose
 
 
-                game.Move(row, numCol, finRow, numFinCol);	
+                game.Move(row, numCol, finRow, numFinCol, true);	
 
                 //this shouldn't be neccessary anymore, since validMoves for king does a check
                 //for if the target cell is under attack.

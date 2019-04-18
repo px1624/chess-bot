@@ -19,6 +19,8 @@ class Piece
     void DecMoveCount();
     int GetMoveCount();
     void SetMoveCount(int moveCount);
+	int  GetPrevRow();
+	void SetPrevRow(int pRow);
 
 protected:
     char piece_symbol;
@@ -27,6 +29,7 @@ protected:
     int col;
     int piece_value;
     int move_count;
+	int prevRow;
 };
 
 class King : public Piece
