@@ -74,7 +74,7 @@ void OnePlayerMode(){
     multimap <int, int> moves;
     multimap <int, int>::iterator mit;
 
-    for(int i = 0;i < 2;i++){
+    while(true){
 
 
         game.Print();
@@ -304,13 +304,35 @@ void OnePlayerMode(){
         }
 		}
 		else{
-			
-			allMoves.clear();
-			game.GenerateMove(allMoves);
-			AImit = allMoves.begin();
-			cout<<"AIMove"<<endl;
-			cout<<AImit->second.rFrom<<" "<<AImit->second.cFrom<<" "<<AImit->second.rTo<<" "<<AImit->second.cTo<<endl;
 						
+			allMoves.clear();
+
+			if(check == 0){
+
+				if(game.CheckMate() == true){
+					cout<<"P"<<(turnCount+1)%2+1<<" wins by Stalemate!"<<endl;
+					return;
+				}												                
+			}
+			if(check == 1){
+
+				if(game.CheckMate() == true){
+			       cout<<"P"<<turnCount%2+1<<" wins!"<<endl;
+					return;					
+				}
+
+			}
+			game.GenerateMove(allMoves);
+			for(AImit = allMoves.begin();AImit != allMoves.end();++AImit){
+			game.Move(AImit->second.rFrom, AImit->second.cFrom, AImit->second.rTo, AImit->second.cTo, false);
+				if(game.check() == 0){
+					game.UndoMove();
+					break;
+				}
+				game.UndoMove();						
+			}
+			game.Move(AImit->second.rFrom, AImit->second.cFrom, AImit->second.rTo, AImit->second.cTo, true);
+			
 
 		}
 
