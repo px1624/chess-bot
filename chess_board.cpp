@@ -8,6 +8,57 @@
 
 using namespace std;
 
+void ChessBoard::GenerateMove(multimap <int, AIMove, std::greater<int> > &allMoves){
+
+	multimap <int, AIMove, std::greater<int> >::iterator allMit;
+	multimap<int, int> moves;
+	multimap<int, int>::iterator mit;
+	multimap<int, int> whiteMoves;
+	multimap<int, int>::iterator wmit;
+	multimap<int, int> secondMoves;
+	multimap<int, int>::iterator secondMit;
+	AIMove temp;
+	int r, c;
+	int tempScore = 0;
+
+	for(unsigned int i = 0;i < blacks.size();i++){
+		moves.clear();
+		blacks[i]->GetPosition(r, c);
+		blacks[i]->ValidMoves(moves, this->board);
+		temp.rFrom = r;
+		temp.cFrom = c;
+		for(mit = moves.begin();mit != moves.end(); ++mit){
+			secondMoves.clear();
+			tempScore = 0;	
+			temp.rTo = mit->first;
+			temp.cTo = mit->second;
+			if(this->board[mit->first][mit->second] != nullptr)
+				tempScore += this->board[mit->first][mit->second]->getPieceValue();		
+			
+			Move(r, c, mit->first, mit->second, false);
+			this->board[mit->first][mit->second]->ValidMoves(secondMoves, this->board);
+			for(secondMit = secondMoves.begin();secondMit != secondMoves.end(); ++secondMit){
+				if(this->board[secondMit->first][secondMit->second] != nullptr)
+					tempScore += this->board[secondMit->first][secondMit->second]->getPieceValue();
+
+			}
+			for(int j = 0; j < whites.size();j++){
+				whites[j]->ValidMoves(whiteMoves, this->board);
+				for(wmit = whiteMoves.begin();wmit != whiteMoves.end();++wmit){
+					if(this->board[wmit->first][wmit->second] != nullptr)
+						tempScore -= this->board[wmit->first][wmit->second]->getPieceValue();
+
+				}
+			}
+
+			UndoMove();
+			allMoves.insert(std::pair<int,AIMove>(tempScore, temp));
+
+		}
+	}
+
+}
+
 bool ChessBoard::CheckMate(){
 
 	multimap<int, int> moves;

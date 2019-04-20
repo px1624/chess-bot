@@ -26,6 +26,12 @@ void  Piece::SetPrevRow(int pRow){
 	prevRow = pRow;
 }
 
+int Piece::getPieceValue(){
+
+	return piece_value;
+
+}
+
 void Piece::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> > &board)
 {
     moves.clear();

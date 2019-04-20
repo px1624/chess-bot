@@ -3,6 +3,13 @@
 #include <vector>
 #include "piece.h"
 
+struct AIMove{
+    int rFrom;
+	int cFrom;
+	int rTo;
+	int cTo;
+};
+
 class ChessBoard
 {
 public:
@@ -26,6 +33,7 @@ public:
     bool IsWhiteTurn();
 	bool CheckMate();
 	void EPCleanup();
+	void GenerateMove(std::multimap <int, AIMove, std::greater<int> > &allMoves);
 
 private:
     const int row_size = 8;

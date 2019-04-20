@@ -21,6 +21,7 @@ class Piece
     void SetMoveCount(int moveCount);
 	int  GetPrevRow();
 	void SetPrevRow(int pRow);
+	int getPieceValue();
 
 protected:
     char piece_symbol;
