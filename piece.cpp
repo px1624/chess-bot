@@ -42,7 +42,7 @@ string Piece::GetPieceStr(string bgColor)
     ostringstream oss;
     int fgColor = this->piece_color == 'w' ? 96 : 95;
     oss.clear();
-    oss << "\033[1;" << fgColor << ";" << bgColor <<  "m " << piece_symbol << "\033[0m";
+    oss << "\033[1;" << fgColor <</* ";" << bgColor <<*/  "m " << piece_symbol << "\033[0m";
     return oss.str();
 }
 
