@@ -15,297 +15,321 @@ void TwoPlayerMode();
 
 int main(){
 
-    int userResponse;
+	int userResponse;
 
 
-    //displays game menu, user must enter 1 2 or 3 to choose an option
+	//displays game menu, user must enter 1 2 or 3 to choose an option
 
-    while (true){
+	while (true){
 
-        cout<<"\t\tUltimate Chess!"<<endl<<endl;
-        cout<<"\t\tMain Menu:"<<endl<<endl;
-        cout<<"\t\t1: One Player"<<endl;
-        cout<<"\t\t2: Two Player"<<endl;
-        cout<<"\t\t3: Quit"<<endl<<endl;
-        cout<<"\t\tPlease Enter 1, 2, or 3"<<endl;
+		cout<<"\t\tUltimate Chess!"<<endl<<endl;
+		cout<<"\t\tMain Menu:"<<endl<<endl;
+		cout<<"\t\t1: One Player"<<endl;
+		cout<<"\t\t2: Two Player"<<endl;
+		cout<<"\t\t3: Quit"<<endl<<endl;
+		cout<<"\t\tPlease Enter 1, 2, or 3"<<endl;
 
 
-        while(!(cin>>userResponse)){
-            cout<<"Invalid Input: Menu Input must be '1' '2' or '3'"<<endl<<endl;
-            string dump;
-            cin.clear();
-            cin >> dump;
-        }
+		while(!(cin>>userResponse)){
+			cout<<"Invalid Input: Menu Input must be '1' '2' or '3'"<<endl<<endl;
+			string dump;
+			cin.clear();
+			cin >> dump;
+		}
 
-        if(userResponse != 1 && userResponse != 2 && userResponse != 3)
-            cout<<"Invalid Input: Menu Input must be '1' '2' or '3'"<<endl<<endl;
+		if(userResponse != 1 && userResponse != 2 && userResponse != 3)
+			cout<<"Invalid Input: Menu Input must be '1' '2' or '3'"<<endl<<endl;
 
 		if(userResponse == 1)
 			OnePlayerMode();
 
-        if(userResponse == 2)
-            TwoPlayerMode();
+		if(userResponse == 2)
+			TwoPlayerMode();
 
 
-        if(userResponse == 3)
-            return 0;
+		if(userResponse == 3)
+			return 0;
 
-    }
+	}
 
 
 }
 
 void OnePlayerMode(){
 
-	
-    int row;
-    int numCol;
-    char col;
-    int finRow;
-    int numFinCol;
-    int PProw, PPcol;
-    char finCol;
-    bool moveCheck = false;
-    bool newCheck = 1;
-    bool check = 0;
-    int turnCount = 0;
-    string s;
+
+	int row;
+	int numCol;
+	char col;
+	int finRow;
+	int numFinCol;
+	int PProw, PPcol;
+	char finCol;
+	bool moveCheck = false;
+	bool newCheck = 1;
+	bool check = 0;
+	int turnCount = 0;
+	string s;
+	bool hintFlag = false;
 	multimap <int, AIMove, std::greater<int> > allMoves;
 	multimap <int, AIMove, std::greater<int> >::iterator AImit;
 
-    ChessBoard game;
-    multimap <int, int> moves;
-    multimap <int, int>::iterator mit;
+	ChessBoard game;
+	multimap <int, int> moves;
+	multimap <int, int>::iterator mit;
 
-    while(true){
+	while(true){
 
 
-        game.Print();
-        moves.clear();
-        newCheck = 1;
-        moveCheck = false;
+		game.Print();
+		moves.clear();
+		newCheck = 1;
+		moveCheck = false;
 		game.EPCleanup();
-        check = game.check();
-        if(check == 1)
-            cout<<"CHECK!"<<endl;
+		check = game.check();
+		if(check == 1)
+			cout<<"CHECK!"<<endl;
 
-        cout<<"P"<< (game.IsWhiteTurn()? "1" : "2") <<" please enter your move: \n";
+		cout<<"P"<< (game.IsWhiteTurn()? "1" : "2") <<" please enter your move: \n";
 
-        //DATA MUST BE ENTERED IN THE FORM ROWOFYOURPIECE COLOFYOURPIECE ROWOFNEWSPACE COLOFNEWSPACE EX. 2 A 2 B
+		//DATA MUST BE ENTERED IN THE FORM ROWOFYOURPIECE COLOFYOURPIECE ROWOFNEWSPACE COLOFNEWSPACE EX. 2 A 2 B
 		if(game.IsWhiteTurn()){
-        if(check == 0){
-            while(moveCheck == false || newCheck == 1){
+			if(check == 0){
+				while(moveCheck == false || newCheck == 1){
 
-                if(game.CheckMate() == true){
-                    cout<<"P"<<(turnCount+1)%2+1<<" wins by Stalemate!"<<endl;
-                    return;
-                }
-
-
-                cin>>s;
-                //to uppercase
-                transform(s.begin(), s.end(), s.begin(), ::toupper);
-                if(s == "QUIT")
-                    return;
-
-                row = stoi(s);
-
-                cin>>col>>finRow>>finCol;
-
-                row = 8 - row;
-                finRow = 8 - finRow;
-                numCol = toupper(col) - 'A';
-                numFinCol = toupper(finCol) - 'A';
-
-                //			cout<<row << numCol << finRow << numFinCol <<endl;
-
-                //		cout<<row<<" "<<numCol<<endl;
-                //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
-                if(turnCount%2+1 == 1){
-                    while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'b'){
-                        cout<<"Please enter a valid piece\n";
-
-                        cin>>s;
-
-                        transform(s.begin(), s.end(), s.begin(), ::toupper);
-                        if(s == "QUIT")
-                            return;
-
-                        row = stoi(s);
-
-                        cin>>col>>finRow>>finCol;
+					if(game.CheckMate() == true){
+						cout<<"P"<<(turnCount+1)%2+1<<" wins by Stalemate!"<<endl;
+						return;
+					}
 
 
-                        row = 8 - row;
-                        finRow = 8 - finRow;
-                        numCol = toupper(col) - 'A';
-                        numFinCol = toupper(finCol) - 'A';
-                    }
-                }
-                //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
-                else if(turnCount%2+1 == 2){
-                    while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'w'){
-                        cout<<"Please enter a valid piece\n";
+					cin>>s;
+					//to uppercase
+					transform(s.begin(), s.end(), s.begin(), ::toupper);
+					if(s == "QUIT")
+						return;
+					else if(s == "HINT"){
+						game.PrintAllValidMoves();
+						hintFlag = true;
+					}
+					else
+						hintFlag = false;
 
-                        cin>>s;
+					if(hintFlag == false){
+						row = stoi(s);
 
-                        transform(s.begin(), s.end(), s.begin(), ::toupper);
-                        if(s == "QUIT")
-                            return;
+						cin>>col>>finRow>>finCol;
 
-                        row = stoi(s);
+						row = 8 - row;
+						finRow = 8 - finRow;
+						numCol = toupper(col) - 'A';
+						numFinCol = toupper(finCol) - 'A';
+					}
 
-                        cin>>col>>finRow>>finCol;
+					//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
+					if(turnCount%2+1 == 1){
+						while(hintFlag == true ||game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'b'){
+							cout<<"Please enter a valid piece\n";
 
-                        row = 8 - row;
-                        finRow = 8 - finRow;
-                        numCol = toupper(col) - 'A';
-                        numFinCol = toupper(finCol) - 'A';
+							cin>>s;
 
-                    }
-                }
+							transform(s.begin(), s.end(), s.begin(), ::toupper);
+							if(s == "QUIT")
+								return;
+							else if(s == "HINT"){
+								game.PrintAllValidMoves();
+								hintFlag = true;
+							}						                
+							else
+								hintFlag = false;
 
-                game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
+							if(hintFlag == false){
+								row = stoi(s);
 
-                moveCheck = game.ContainsMove(moves, finRow, numFinCol);
-
-
-                //checks to make sure the move is valid
-                if(moveCheck == false)
-                    cout << "Invalid move! This piece cannot move here."<<endl;
-
-                //makes sure that the move does not put the king in danger
-                //do not need to check if king is moving because king
-                //by default cannot move into a check
-                Piece* tmp = game.getPiece(row, numCol);
-                bool moved = false;
-                if(tmp != nullptr && tmp->GetSymbol() != 'K')
-                {
-                    moved = game.Move(row, numCol, finRow, numFinCol, false);
-                }
-                newCheck = game.check();
-                if(newCheck == 1){
-                    cout <<"Cannot put the king in danger!"<<endl;
-                }
-                if(moved)
-                    game.UndoMove();
-            }
-            
-            /* uncomment this to debug
-            cout << "Valid moves for this piece:\n";
-            for(mit = moves.begin(); mit != moves.end();++mit)
-                cout<< 8 - mit->first << " " << static_cast<char>(mit->second + 'A')<<endl;
-            */
-
-            game.Move(row, numCol, finRow, numFinCol, true);	
-            if(game.PawnPCheck(PProw, PPcol) == true)
-                game.PawnPromotion(PProw, PPcol);
-
-        }
-        if(check == 1){
-
-            while(check == 1){
-
-                if(game.CheckMate() == true){
-                    cout<<"P"<<turnCount%2+1<<" wins!"<<endl;
-                    return;
-                }
-
-                moveCheck = false;
-                while(moveCheck == false){
+								cin>>col>>finRow>>finCol;
 
 
-                    cin>>s;
+								row = 8 - row;
+								finRow = 8 - finRow;
+								numCol = toupper(col) - 'A';
+								numFinCol = toupper(finCol) - 'A';
+							}
+						}
+					}
+					//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
+					else if(turnCount%2+1 == 2){
+						while(game.checkNull(hintFlag == true || row, numCol) == true || game.getSpaceColor(row, numCol) == 'w' ){
+							cout<<"Please enter a valid piece\n";
 
-                    transform(s.begin(), s.end(), s.begin(), ::toupper);
-                    if(s == "QUIT")
-                        return;
+							cin>>s;
 
-                    row = stoi(s);
+							transform(s.begin(), s.end(), s.begin(), ::toupper);
+							if(s == "QUIT")
+								return;
 
-                    cin>>col>>finRow>>finCol;
+							else if(s == "HINT"){
+								game.PrintAllValidMoves();
+								hintFlag = true;
+							}						                
+							else
+								hintFlag = false;
 
-                    row = 8 - row;
-                    finRow = 8 - finRow;
-                    numCol = toupper(col) - 'A';
-                    numFinCol = toupper(finCol) - 'A';
+							if(hintFlag == false){
+								row = stoi(s);
 
-                    cout<<row << numCol << finRow << numFinCol <<endl;
-                    //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
-                    if(turnCount%2+1 == 1){
-                        while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'b'){
-                            cout<<"Please enter a valid piece\n";
-
-                            cin>>s;
-
-                            transform(s.begin(), s.end(), s.begin(), ::toupper);
-                            if(s == "QUIT")
-                                return;
-
-                            row = stoi(s);
-
-                            cin>>col>>finRow>>finCol;
-
-
-                            row = 8 - row;
-                            finRow = 8 - finRow;
-                            numCol = toupper(col) - 'A';
-                            numFinCol = toupper(finCol) - 'A';
-                        }
-                    }
-                    //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
-                    else if(turnCount%2+1 == 2){
-                        while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'w'){
-                            cout<<"Please enter a valid piece\n";
-
-                            cin>>s;
-
-                            transform(s.begin(), s.end(), s.begin(), ::toupper);
-                            if(s == "QUIT")
-                                return;
-
-                            row = stoi(s);
-
-                            cin>>col>>finRow>>finCol;
-
-                            row = 8 - row;
-                            finRow = 8 - finRow;
-                            numCol = col - 'A';
-                            numFinCol = toupper(finCol) - 'A';
-
-                        }
-                    }
+								cin>>col>>finRow>>finCol;
 
 
-                    game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
+								row = 8 - row;
+								finRow = 8 - finRow;
+								numCol = toupper(col) - 'A';
+								numFinCol = toupper(finCol) - 'A';
+							}
+							
+						}
+					}
 
-                    moveCheck = game.ContainsMove(moves, finRow, numFinCol);
+					game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
 
-                    if(moveCheck == false)
-                        cout << "Invalid move! This piece cannot move here."<<endl;
-
-                }
-
-                //get moves and print them for debugging purpose
+					moveCheck = game.ContainsMove(moves, finRow, numFinCol);
 
 
-                game.Move(row, numCol, finRow, numFinCol, true);	
+					//checks to make sure the move is valid
+					if(moveCheck == false)
+						cout << "Invalid move! This piece cannot move here."<<endl;
 
-                //this shouldn't be neccessary anymore, since validMoves for king does a check
-                //for if the target cell is under attack.
-                check = game.check();
+					//makes sure that the move does not put the king in danger
+					//do not need to check if king is moving because king
+					//by default cannot move into a check
+					Piece* tmp = game.getPiece(row, numCol);
+					bool moved = false;
+					if(tmp != nullptr && tmp->GetSymbol() != 'K')
+					{
+						moved = game.Move(row, numCol, finRow, numFinCol, false);
+					}
+					newCheck = game.check();
+					if(newCheck == 1){
+						cout <<"Cannot put the king in danger!"<<endl;
+					}
+					if(moved)
+						game.UndoMove();
+				}
 
-                if(check == 1){
-                    cout<<"Invalid Move! You must move the king out of check\n";
-                    game.UndoMove();
-                }
+				/* uncomment this to debug
+				   cout << "Valid moves for this piece:\n";
+				   for(mit = moves.begin(); mit != moves.end();++mit)
+				   cout<< 8 - mit->first << " " << static_cast<char>(mit->second + 'A')<<endl;
+				   */
 
-            }
+				game.Move(row, numCol, finRow, numFinCol, true);	
+				if(game.PawnPCheck(PProw, PPcol) == true)
+					game.PawnPromotion(PProw, PPcol);
 
-        }
+			}
+			if(check == 1){
+
+				while(check == 1){
+
+					if(game.CheckMate() == true){
+						cout<<"P"<<(turnCount+1)%2+1<<" wins!"<<endl;
+						return;
+					}
+
+					moveCheck = false;
+					while(moveCheck == false){
+
+
+						cin>>s;
+
+						transform(s.begin(), s.end(), s.begin(), ::toupper);
+						if(s == "QUIT")
+							return;
+
+						row = stoi(s);
+
+						cin>>col>>finRow>>finCol;
+
+						row = 8 - row;
+						finRow = 8 - finRow;
+						numCol = toupper(col) - 'A';
+						numFinCol = toupper(finCol) - 'A';
+
+						cout<<row << numCol << finRow << numFinCol <<endl;
+						//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
+						if(turnCount%2+1 == 1){
+							while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'b'){
+								cout<<"Please enter a valid piece\n";
+
+								cin>>s;
+
+								transform(s.begin(), s.end(), s.begin(), ::toupper);
+								if(s == "QUIT")
+									return;
+
+								row = stoi(s);
+
+								cin>>col>>finRow>>finCol;
+
+
+								row = 8 - row;
+								finRow = 8 - finRow;
+								numCol = toupper(col) - 'A';
+								numFinCol = toupper(finCol) - 'A';
+							}
+						}
+						//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
+						else if(turnCount%2+1 == 2){
+							while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'w'){
+								cout<<"Please enter a valid piece\n";
+
+								cin>>s;
+
+								transform(s.begin(), s.end(), s.begin(), ::toupper);
+								if(s == "QUIT")
+									return;
+
+								row = stoi(s);
+
+								cin>>col>>finRow>>finCol;
+
+								row = 8 - row;
+								finRow = 8 - finRow;
+								numCol = col - 'A';
+								numFinCol = toupper(finCol) - 'A';
+
+							}
+						}
+
+
+						game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
+
+						moveCheck = game.ContainsMove(moves, finRow, numFinCol);
+
+						if(moveCheck == false)
+							cout << "Invalid move! This piece cannot move here."<<endl;
+
+					}
+
+					//get moves and print them for debugging purpose
+
+
+					game.Move(row, numCol, finRow, numFinCol, true);	
+
+					//this shouldn't be neccessary anymore, since validMoves for king does a check
+					//for if the target cell is under attack.
+					check = game.check();
+
+					if(check == 1){
+						cout<<"Invalid Move! You must move the king out of check\n";
+						game.UndoMove();
+					}
+
+				}
+
+			}
 		}
 		else{
-						
+
 			allMoves.clear();
 
 			if(check == 0){
@@ -318,14 +342,14 @@ void OnePlayerMode(){
 			if(check == 1){
 
 				if(game.CheckMate() == true){
-			       cout<<"P"<<turnCount%2+1<<" wins!"<<endl;
+					cout<<"P"<<turnCount%2+1<<" wins!"<<endl;
 					return;					
 				}
 
 			}
 			game.GenerateMove(allMoves);
 			for(AImit = allMoves.begin();AImit != allMoves.end();++AImit){
-			game.Move(AImit->second.rFrom, AImit->second.cFrom, AImit->second.rTo, AImit->second.cTo, false);
+				game.Move(AImit->second.rFrom, AImit->second.cFrom, AImit->second.rTo, AImit->second.cTo, false);
 				if(game.check() == 0){
 					game.UndoMove();
 					break;
@@ -333,267 +357,267 @@ void OnePlayerMode(){
 				game.UndoMove();						
 			}
 			game.Move(AImit->second.rFrom, AImit->second.cFrom, AImit->second.rTo, AImit->second.cTo, true);
-            printf("Chess bot moved: %d %c %d %c\n", 8 - AImit->second.rFrom, AImit->second.cFrom + 'A',
-                                                     8 - AImit->second.rTo, AImit->second.cTo + 'A');
+			printf("Chess bot moved: %d %c %d %c\n", 8 - AImit->second.rFrom, AImit->second.cFrom + 'A',
+					8 - AImit->second.rTo, AImit->second.cTo + 'A');
 		}
 
-        game.incTurnCount();
-        turnCount++;
-    }
+		game.incTurnCount();
+		turnCount++;
+	}
 
 }
 void TwoPlayerMode(){
 
-    int row;
-    int numCol;
-    char col;
-    int finRow;
-    int numFinCol;
-    int PProw, PPcol;
-    char finCol;
-    bool moveCheck = false;
-    bool newCheck = 1;
-    bool check = 0;
-    int turnCount = 0;
-    string s;
+	int row;
+	int numCol;
+	char col;
+	int finRow;
+	int numFinCol;
+	int PProw, PPcol;
+	char finCol;
+	bool moveCheck = false;
+	bool newCheck = 1;
+	bool check = 0;
+	int turnCount = 0;
+	string s;
 
 
-    ChessBoard game;
-    multimap <int, int> moves;
-    multimap <int, int>::iterator mit;
+	ChessBoard game;
+	multimap <int, int> moves;
+	multimap <int, int>::iterator mit;
 
-    while (true){
+	while (true){
 
 
-        game.Print();
-        moves.clear();
-        newCheck = 1;
-        moveCheck = false;
+		game.Print();
+		moves.clear();
+		newCheck = 1;
+		moveCheck = false;
 		game.EPCleanup();
-        check = game.check();
-        if(check == 1)
-            cout<<"CHECK!"<<endl;
+		check = game.check();
+		if(check == 1)
+			cout<<"CHECK!"<<endl;
 
-        cout<<"P"<< (game.IsWhiteTurn()? "1" : "2") <<" please enter your move: \n";
+		cout<<"P"<< (game.IsWhiteTurn()? "1" : "2") <<" please enter your move: \n";
 
-        //DATA MUST BE ENTERED IN THE FORM ROWOFYOURPIECE COLOFYOURPIECE ROWOFNEWSPACE COLOFNEWSPACE EX. 2 A 2 B
+		//DATA MUST BE ENTERED IN THE FORM ROWOFYOURPIECE COLOFYOURPIECE ROWOFNEWSPACE COLOFNEWSPACE EX. 2 A 2 B
 
-        if(check == 0){
-            while(moveCheck == false || newCheck == 1){
+		if(check == 0){
+			while(moveCheck == false || newCheck == 1){
 
-                if(game.CheckMate() == true){
-                    cout<<"P"<<(turnCount+1)%2+1<<" wins by Stalemate!"<<endl;
-                    return;
-                }
+				if(game.CheckMate() == true){
+					cout<<"P"<<(turnCount+1)%2+1<<" wins by Stalemate!"<<endl;
+					return;
+				}
 
 
-                cin>>s;
-                //to uppercase
-                transform(s.begin(), s.end(), s.begin(), ::toupper);
-                if(s == "QUIT")
-                    return;
+				cin>>s;
+				//to uppercase
+				transform(s.begin(), s.end(), s.begin(), ::toupper);
+				if(s == "QUIT")
+					return;
 
-                row = stoi(s);
+				row = stoi(s);
 
-                cin>>col>>finRow>>finCol;
+				cin>>col>>finRow>>finCol;
 
-                row = 8 - row;
-                finRow = 8 - finRow;
-                numCol = toupper(col) - 'A';
-                numFinCol = toupper(finCol) - 'A';
+				row = 8 - row;
+				finRow = 8 - finRow;
+				numCol = toupper(col) - 'A';
+				numFinCol = toupper(finCol) - 'A';
 
-                //			cout<<row << numCol << finRow << numFinCol <<endl;
+				//			cout<<row << numCol << finRow << numFinCol <<endl;
 
-                //		cout<<row<<" "<<numCol<<endl;
-                //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
-                if(turnCount%2+1 == 1){
-                    while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'b'){
-                        cout<<"Please enter a valid piece\n";
+				//		cout<<row<<" "<<numCol<<endl;
+				//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
+				if(turnCount%2+1 == 1){
+					while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'b'){
+						cout<<"Please enter a valid piece\n";
 
-                        cin>>s;
+						cin>>s;
 
-                        transform(s.begin(), s.end(), s.begin(), ::toupper);
-                        if(s == "QUIT")
-                            return;
+						transform(s.begin(), s.end(), s.begin(), ::toupper);
+						if(s == "QUIT")
+							return;
 
-                        row = stoi(s);
+						row = stoi(s);
 
-                        cin>>col>>finRow>>finCol;
+						cin>>col>>finRow>>finCol;
 
 
-                        row = 8 - row;
-                        finRow = 8 - finRow;
-                        numCol = toupper(col) - 'A';
-                        numFinCol = toupper(finCol) - 'A';
-                    }
-                }
-                //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
-                else if(turnCount%2+1 == 2){
-                    while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'w'){
-                        cout<<"Please enter a valid piece\n";
+						row = 8 - row;
+						finRow = 8 - finRow;
+						numCol = toupper(col) - 'A';
+						numFinCol = toupper(finCol) - 'A';
+					}
+				}
+				//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
+				else if(turnCount%2+1 == 2){
+					while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'w'){
+						cout<<"Please enter a valid piece\n";
 
-                        cin>>s;
+						cin>>s;
 
-                        transform(s.begin(), s.end(), s.begin(), ::toupper);
-                        if(s == "QUIT")
-                            return;
+						transform(s.begin(), s.end(), s.begin(), ::toupper);
+						if(s == "QUIT")
+							return;
 
-                        row = stoi(s);
+						row = stoi(s);
 
-                        cin>>col>>finRow>>finCol;
+						cin>>col>>finRow>>finCol;
 
-                        row = 8 - row;
-                        finRow = 8 - finRow;
-                        numCol = toupper(col) - 'A';
-                        numFinCol = toupper(finCol) - 'A';
+						row = 8 - row;
+						finRow = 8 - finRow;
+						numCol = toupper(col) - 'A';
+						numFinCol = toupper(finCol) - 'A';
 
-                    }
-                }
+					}
+				}
 
 
-                game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
+				game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
 
-                moveCheck = game.ContainsMove(moves, finRow, numFinCol);
+				moveCheck = game.ContainsMove(moves, finRow, numFinCol);
 
 
-                //checks to make sure the move is valid
-                if(moveCheck == false)
-                    cout << "Invalid move! This piece cannot move here."<<endl;
+				//checks to make sure the move is valid
+				if(moveCheck == false)
+					cout << "Invalid move! This piece cannot move here."<<endl;
 
-                //makes sure that the move does not put the king in danger
-                //do not need to check if king is moving because king
-                //by default cannot move into a check
-                Piece* tmp = game.getPiece(row, numCol);
-                bool moved = false;
-                if(tmp != nullptr && tmp->GetSymbol() != 'K')
-                {
-                    moved = game.Move(row, numCol, finRow, numFinCol, false);
-                }
-                newCheck = game.check();
-                if(newCheck == 1){
-                    cout <<"Cannot put the king in danger!"<<endl;
-                }
-                if(moved)
-                    game.UndoMove();
-            }
-            
-            /* debug message
-            cout << "Valid moves for this piece:\n";
-            for(mit = moves.begin(); mit != moves.end();++mit)
-                cout<< 8 - mit->first << " " << static_cast<char>(mit->second + 'A')<<endl;
-            */
-            
-            game.Move(row, numCol, finRow, numFinCol, true);	
-            if(game.PawnPCheck(PProw, PPcol) == true)
-                game.PawnPromotion(PProw, PPcol);
+				//makes sure that the move does not put the king in danger
+				//do not need to check if king is moving because king
+				//by default cannot move into a check
+				Piece* tmp = game.getPiece(row, numCol);
+				bool moved = false;
+				if(tmp != nullptr && tmp->GetSymbol() != 'K')
+				{
+					moved = game.Move(row, numCol, finRow, numFinCol, false);
+				}
+				newCheck = game.check();
+				if(newCheck == 1){
+					cout <<"Cannot put the king in danger!"<<endl;
+				}
+				if(moved)
+					game.UndoMove();
+			}
 
-        }
-        if(check == 1){
+			/* debug message
+			   cout << "Valid moves for this piece:\n";
+			   for(mit = moves.begin(); mit != moves.end();++mit)
+			   cout<< 8 - mit->first << " " << static_cast<char>(mit->second + 'A')<<endl;
+			   */
 
-            while(check == 1){
+			game.Move(row, numCol, finRow, numFinCol, true);	
+			if(game.PawnPCheck(PProw, PPcol) == true)
+				game.PawnPromotion(PProw, PPcol);
 
-                if(game.CheckMate() == true){
-                    cout<<"P"<<turnCount%2+1<<" wins!"<<endl;
-                    return;
-                }
+		}
+		if(check == 1){
 
-                moveCheck = false;
-                while(moveCheck == false){
+			while(check == 1){
 
+				if(game.CheckMate() == true){
+					cout<<"P"<<(turnCount+1)%2+1<<" wins!"<<endl;
+					return;
+				}
 
-                    cin>>s;
+				moveCheck = false;
+				while(moveCheck == false){
 
-                    transform(s.begin(), s.end(), s.begin(), ::toupper);
-                    if(s == "QUIT")
-                        return;
 
-                    row = stoi(s);
+					cin>>s;
 
-                    cin>>col>>finRow>>finCol;
+					transform(s.begin(), s.end(), s.begin(), ::toupper);
+					if(s == "QUIT")
+						return;
 
-                    row = 8 - row;
-                    finRow = 8 - finRow;
-                    numCol = toupper(col) - 'A';
-                    numFinCol = toupper(finCol) - 'A';
+					row = stoi(s);
 
-                    cout<<row << numCol << finRow << numFinCol <<endl;
-                    //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
-                    if(turnCount%2+1 == 1){
-                        while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'b'){
-                            cout<<"Please enter a valid piece\n";
+					cin>>col>>finRow>>finCol;
 
-                            cin>>s;
+					row = 8 - row;
+					finRow = 8 - finRow;
+					numCol = toupper(col) - 'A';
+					numFinCol = toupper(finCol) - 'A';
 
-                            transform(s.begin(), s.end(), s.begin(), ::toupper);
-                            if(s == "QUIT")
-                                return;
+					cout<<row << numCol << finRow << numFinCol <<endl;
+					//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
+					if(turnCount%2+1 == 1){
+						while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'b'){
+							cout<<"Please enter a valid piece\n";
 
-                            row = stoi(s);
+							cin>>s;
 
-                            cin>>col>>finRow>>finCol;
+							transform(s.begin(), s.end(), s.begin(), ::toupper);
+							if(s == "QUIT")
+								return;
 
+							row = stoi(s);
 
-                            row = 8 - row;
-                            finRow = 8 - finRow;
-                            numCol = toupper(col) - 'A';
-                            numFinCol = toupper(finCol) - 'A';
-                        }
-                    }
-                    //checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
-                    else if(turnCount%2+1 == 2){
-                        while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'w'){
-                            cout<<"Please enter a valid piece\n";
+							cin>>col>>finRow>>finCol;
 
-                            cin>>s;
 
-                            transform(s.begin(), s.end(), s.begin(), ::toupper);
-                            if(s == "QUIT")
-                                return;
+							row = 8 - row;
+							finRow = 8 - finRow;
+							numCol = toupper(col) - 'A';
+							numFinCol = toupper(finCol) - 'A';
+						}
+					}
+					//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
+					else if(turnCount%2+1 == 2){
+						while(game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'w'){
+							cout<<"Please enter a valid piece\n";
 
-                            row = stoi(s);
+							cin>>s;
 
-                            cin>>col>>finRow>>finCol;
+							transform(s.begin(), s.end(), s.begin(), ::toupper);
+							if(s == "QUIT")
+								return;
 
-                            row = 8 - row;
-                            finRow = 8 - finRow;
-                            numCol = col - 'A';
-                            numFinCol = toupper(finCol) - 'A';
+							row = stoi(s);
 
-                        }
-                    }
+							cin>>col>>finRow>>finCol;
 
+							row = 8 - row;
+							finRow = 8 - finRow;
+							numCol = col - 'A';
+							numFinCol = toupper(finCol) - 'A';
 
-                    game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
+						}
+					}
 
-                    moveCheck = game.ContainsMove(moves, finRow, numFinCol);
 
-                    if(moveCheck == false)
-                        cout << "Invalid move! This piece cannot move here."<<endl;
+					game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
 
-                }
+					moveCheck = game.ContainsMove(moves, finRow, numFinCol);
 
-                //get moves and print them for debugging purpose
+					if(moveCheck == false)
+						cout << "Invalid move! This piece cannot move here."<<endl;
 
+				}
 
-                game.Move(row, numCol, finRow, numFinCol, true);	
+				//get moves and print them for debugging purpose
 
-                //this shouldn't be neccessary anymore, since validMoves for king does a check
-                //for if the target cell is under attack.
-                check = game.check();
 
-                if(check == 1){
-                    cout<<"Invalid Move! You must move the king out of check\n";
-                    game.UndoMove();
-                }
+				game.Move(row, numCol, finRow, numFinCol, true);	
 
-            }
+				//this shouldn't be neccessary anymore, since validMoves for king does a check
+				//for if the target cell is under attack.
+				check = game.check();
 
-        }
+				if(check == 1){
+					cout<<"Invalid Move! You must move the king out of check\n";
+					game.UndoMove();
+				}
 
+			}
 
-        game.incTurnCount();
-        turnCount++;
-    }
+		}
+
+
+		game.incTurnCount();
+		turnCount++;
+	}
 
 
 }

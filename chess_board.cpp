@@ -33,20 +33,20 @@ void ChessBoard::GenerateMove(multimap <int, AIMove, std::greater<int> > &allMov
 			temp.rTo = mit->first;
 			temp.cTo = mit->second;
 			if(this->board[mit->first][mit->second] != nullptr)
-				tempScore += this->board[mit->first][mit->second]->getPieceValue();		
+				tempScore += abs(this->board[mit->first][mit->second]->getPieceValue());		
 			
 			Move(r, c, mit->first, mit->second, false);
 			this->board[mit->first][mit->second]->ValidMoves(secondMoves, this->board);
 			for(secondMit = secondMoves.begin();secondMit != secondMoves.end(); ++secondMit){
 				if(this->board[secondMit->first][secondMit->second] != nullptr)
-					tempScore += this->board[secondMit->first][secondMit->second]->getPieceValue();
+					tempScore += abs(this->board[secondMit->first][secondMit->second]->getPieceValue());
 
 			}
 			for(int j = 0; j < whites.size();j++){
 				whites[j]->ValidMoves(whiteMoves, this->board);
 				for(wmit = whiteMoves.begin();wmit != whiteMoves.end();++wmit){
 					if(this->board[wmit->first][wmit->second] != nullptr)
-						tempScore -= this->board[wmit->first][wmit->second]->getPieceValue();
+						tempScore -= abs(this->board[wmit->first][wmit->second]->getPieceValue());
 
 				}
 			}
