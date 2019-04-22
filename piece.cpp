@@ -37,12 +37,12 @@ void Piece::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> > 
     moves.clear();
 }
 
-string Piece::GetPieceStr()
+string Piece::GetPieceStr(string bgColor)
 {
     ostringstream oss;
     int fgColor = this->piece_color == 'w' ? 96 : 95;
     oss.clear();
-    oss << "\033[1;" << fgColor << "m " << piece_symbol << "\033[0m";
+    oss << "\033[1;" << fgColor << ";" << bgColor <<  "m " << piece_symbol << "\033[0m";
     return oss.str();
 }
 
