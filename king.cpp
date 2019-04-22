@@ -121,10 +121,7 @@ bool King::isInCheck(const vector<vector<Piece*> > &board, int r, int c)
                     for(it = moves.begin(); it != moves.end(); ++it)
                     {
                         if(it->first == r && it->second == c)
-                        {
-                            cout << "king cannot move to " << r << " " << c << endl;
                             return true;
-                        }
                     }
                 }
             }

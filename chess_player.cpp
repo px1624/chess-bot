@@ -2,6 +2,7 @@
 #include "chess_board.h"
 
 #include <iostream>
+#include <cstdlib>
 #include <vector>
 #include <string>
 #include <cctype>
@@ -31,7 +32,9 @@ int main(){
 
         while(!(cin>>userResponse)){
             cout<<"Invalid Input: Menu Input must be '1' '2' or '3'"<<endl<<endl;
+            string dump;
             cin.clear();
+            cin >> dump;
         }
 
         if(userResponse != 1 && userResponse != 2 && userResponse != 3)
@@ -162,7 +165,6 @@ void OnePlayerMode(){
                     }
                 }
 
-
                 game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
 
                 moveCheck = game.ContainsMove(moves, finRow, numFinCol);
@@ -188,13 +190,12 @@ void OnePlayerMode(){
                 if(moved)
                     game.UndoMove();
             }
-
-            //get moves and print them for debugging purpose
-
-		
+            
+            /* uncomment this to debug
             cout << "Valid moves for this piece:\n";
             for(mit = moves.begin(); mit != moves.end();++mit)
                 cout<< 8 - mit->first << " " << static_cast<char>(mit->second + 'A')<<endl;
+            */
 
             game.Move(row, numCol, finRow, numFinCol, true);	
             if(game.PawnPCheck(PProw, PPcol) == true)
@@ -332,8 +333,8 @@ void OnePlayerMode(){
 				game.UndoMove();						
 			}
 			game.Move(AImit->second.rFrom, AImit->second.cFrom, AImit->second.rTo, AImit->second.cTo, true);
-			
-
+            printf("Chess bot moved: %d %c %d %c\n", 8 - AImit->second.rFrom, AImit->second.cFrom + 'A',
+                                                     8 - AImit->second.rTo, AImit->second.cTo + 'A');
 		}
 
         game.incTurnCount();
@@ -475,14 +476,13 @@ void TwoPlayerMode(){
                 if(moved)
                     game.UndoMove();
             }
-
-            //get moves and print them for debugging purpose
-
-		
+            
+            /* debug message
             cout << "Valid moves for this piece:\n";
             for(mit = moves.begin(); mit != moves.end();++mit)
                 cout<< 8 - mit->first << " " << static_cast<char>(mit->second + 'A')<<endl;
-
+            */
+            
             game.Move(row, numCol, finRow, numFinCol, true);	
             if(game.PawnPCheck(PProw, PPcol) == true)
                 game.PawnPromotion(PProw, PPcol);

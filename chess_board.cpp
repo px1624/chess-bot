@@ -413,9 +413,26 @@ ChessBoard::~ChessBoard()
 
 void ChessBoard::UndoMove(){
 
-	board[prevFromRow][prevFromCol] = board[prevToRow][ prevToCol];
+	board[prevFromRow][prevFromCol] = board[prevToRow][prevToCol];
 	board[prevFromRow][prevFromCol]->SetPosition(prevFromRow, prevFromCol);
     board[prevFromRow][prevFromCol]->DecMoveCount();
+
+    //undo castle if king moved more than 1 space
+    if(board[prevFromRow][prevFromCol]->GetSymbol() == 'K' &&
+       abs(prevFromCol - prevToCol) > 1)
+    {
+        //determine rook to and from column position
+        int rPrevToCol = (prevToCol == 6) ? 5 : 3;
+        int rPrevFromCol = (prevToCol == 6) ? 7 : 0;
+        //get rook
+        Piece* rook = board[prevFromRow][rPrevToCol];
+        //move rook back
+        board[prevFromRow][rPrevFromCol] = rook;
+        board[prevFromRow][rPrevToCol] = nullptr;
+        //set new position and decrement movecount
+        rook->SetPosition(prevFromRow, rPrevFromCol);
+        rook->DecMoveCount();
+    }
 
 	if(prevToSymbol == 'P'){
 		board[prevToRow][ prevToCol] = new Pawn(prevToRow,  prevToCol, prevToColor);
