@@ -34,6 +34,7 @@ public:
 	bool CheckMate();
 	void EPCleanup();
 	void GenerateMove(std::multimap <int, AIMove, std::greater<int> > &allMoves);
+    void GenerateMove_2(std::multimap<int, AIMove, std::greater<int> > &allMoves);
 
 private:
     const int row_size = 8;

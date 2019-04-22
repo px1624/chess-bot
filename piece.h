@@ -10,7 +10,7 @@ class Piece
     Piece(int row, int col, char color, char symbol, int pVal);
     virtual ~Piece();
     virtual void ValidMoves(std::multimap<int, int> &moves, const std::vector < std::vector <Piece*> > &board);
-    std::string GetPieceStr();
+    std::string GetPieceStr(std::string bgColor = "40");
     char GetColor();
     char GetSymbol();
     void SetPosition(int r, int c);

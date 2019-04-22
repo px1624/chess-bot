@@ -59,6 +59,10 @@ void ChessBoard::GenerateMove(multimap <int, AIMove, std::greater<int> > &allMov
 
 }
 
+void ChessBoard::GenerateMove_2(multimap <int, AIMove, std::greater<int> > &allMoves)
+{
+}
+
 bool ChessBoard::CheckMate(){
 
 	multimap<int, int> moves;
@@ -152,6 +156,7 @@ void ChessBoard::Print()
         //cout << buffRow << endl;
         cout << "\t" << 8 - i << " |";
         for(int j = 0;  j < col_size; j++){
+            //string bgColor = ((i + j) % 2 == 0)? "47" : "40";
             cout << " " << (board[i][j] == nullptr ? "  ": board[i][j]->GetPieceStr()) << " |";
         }
         cout << endl;
@@ -166,12 +171,11 @@ void ChessBoard::PrintAllValidMoves()
     multimap<int, int> m;
     multimap<int, int>::iterator it;
     int r, c;
+    vector<Piece*>* pieces = IsWhiteTurn() ? &whites : &blacks;
 
-    for(int i = 0; i < row_size; i++)
+    for(int i = 0; i < (int)pieces->size(); i++)
     {
-        for(int j = 0; j < col_size; j++)
-        {
-            p = board[i][j];
+            p = (*pieces)[i];
             if(p != nullptr)
             {
                 m.clear();
@@ -183,7 +187,6 @@ void ChessBoard::PrintAllValidMoves()
                     printf(" (%d, %c)", 8 - it->first, static_cast<char>(it->second + 'A'));
                 printf("\n");
             }
-        }
     }
 }
 
