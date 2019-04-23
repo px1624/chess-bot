@@ -5,17 +5,20 @@
 
 using namespace std;
 
+//constructor
 Pawn::Pawn(int row, int col, char color):Piece(row, col, color, 'P', 10)
 {
 
 }
 
+//fills map with all the valid moves for the pawn
 void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::vector <Piece*> > &board){
 
 		moves.clear();
 	    if (this->piece_color == 'w'){
         //cout << "check w\n" << flush;
 		
+		//if the white pawn is in the starting row, it can move two spaces forward
 		if(row == 6){		
 
         for(int i = 1; i < 3; i++ ){
@@ -31,7 +34,7 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
 
         }
 		}
-	
+		//else it can only move one space forward
 		else{
 
 			for(int i = 1; i < 2; i++ ){
@@ -45,6 +48,7 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
 			}
 		}
 
+		//if there is a black pawn in the diagonal forward spaces, the pawn may capture it
         if(row-1 >= 0 && col - 1 >= 0){
 
             if(board[row - 1][col-1] != nullptr){
@@ -62,6 +66,7 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
 			}
         }
 
+		//if the conditions are met, en passe may happen
 		if(row == 3){
 			if(col - 1 >= 0){
 				if(board[row][col-1] != nullptr &&
@@ -92,6 +97,7 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
         
        // cout << "check b\n" << flush;
 		
+		//if the black pawns are in the starting row, they may move 2 spaces
 		if(row == 1){
 		
 		for(int i = 1; i < 3; i++ ){
@@ -109,6 +115,8 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
 
         }
 		}
+
+		//else they can move 1
 		else{
 
 		for(int i = 1; i < 2; i++ ){
@@ -125,6 +133,7 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
 
 		}
 
+		//can capture white pieces in the diagonal
         if(row+1 <= (int)board.size() && col - 1 >= 0){
 
 			if(board[row + 1][col-1] != nullptr){
@@ -142,6 +151,7 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
             
         }
 
+		//en passe for black pieces
 		if(row == 4){
 			if(col - 1 >= 0){
 				if(board[row][col-1] != nullptr &&

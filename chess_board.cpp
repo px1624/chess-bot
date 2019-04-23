@@ -1,3 +1,7 @@
+/*chess_board.cpp - Written by Michael Wermert and Pengda Xie
+This file contains the method definitions for the ChessBoard class
+
+*/
 #include "chess_board.h"
 #include <string>
 #include <vector>
@@ -8,6 +12,8 @@
 
 using namespace std;
 
+//scores a move based on how many pieces can be taken by both sides and returns them in a map keyed on the score
+//used for the 1p mode
 void ChessBoard::GenerateMove(multimap <int, AIMove, std::greater<int> > &allMoves){
 
 	multimap <int, AIMove, std::greater<int> >::iterator allMit;
@@ -21,6 +27,7 @@ void ChessBoard::GenerateMove(multimap <int, AIMove, std::greater<int> > &allMov
 	int r, c;
 	int tempScore = 0;
 
+	//goes through all the moves for every black piece and calculates all of the white pieces that it can hit
 	for(unsigned int i = 0;i < blacks.size();i++){
 		moves.clear();
 		blacks[i]->GetPosition(r, c);
@@ -42,6 +49,8 @@ void ChessBoard::GenerateMove(multimap <int, AIMove, std::greater<int> > &allMov
 					tempScore += abs(this->board[secondMit->first][secondMit->second]->getPieceValue());
 
 			}
+
+			//goes through all of the white pieces and subtracts all of the black pieces that they can hit from the score
 			for(int j = 0; j < whites.size();j++){
 				whites[j]->ValidMoves(whiteMoves, this->board);
 				for(wmit = whiteMoves.begin();wmit != whiteMoves.end();++wmit){
@@ -51,6 +60,7 @@ void ChessBoard::GenerateMove(multimap <int, AIMove, std::greater<int> > &allMov
 				}
 			}
 
+			//inserts the move into the multimap keyed on score
 			UndoMove();
 			allMoves.insert(std::pair<int,AIMove>(tempScore, temp));
 
@@ -63,6 +73,7 @@ void ChessBoard::GenerateMove_2(multimap <int, AIMove, std::greater<int> > &allM
 {
 }
 
+//determines if one side is in checkmate, returns true if yes
 bool ChessBoard::CheckMate(){
 
 	multimap<int, int> moves;
@@ -70,6 +81,8 @@ bool ChessBoard::CheckMate(){
 	int r, c;
 	if(IsWhiteTurn()){
 
+		//if no move that the white pieces can make results in the check being ended, black wins and it returns true
+		//else it returns false
 		for(int i = 0;i < whites.size();i++){
 			moves.clear();
 			whites[i]->ValidMoves(moves, this->board);
@@ -79,11 +92,11 @@ bool ChessBoard::CheckMate(){
 				Move(r, c, mit->first, mit->second, false);
 				if(check() == 0){
 					UndoMove();
-				//	cout<<r<<" "<<c<<"can move to "<<mit->first<<" "<<mit->second<<endl;
+		
 					return false;
 				}
 				UndoMove();
-			//	cout<<"cannot move to "<<mit->first<<" "<<mit->second<<endl;
+			
 			}
 
 		}
@@ -92,6 +105,8 @@ bool ChessBoard::CheckMate(){
 	}
 	else{
 
+		//if no move that the black pieces can make results in the check being ended, white wins and it returns true
+		//else it returns false
 		for(int i = 0;i < blacks.size();i++){
 			moves.clear();
 			blacks[i]->ValidMoves(moves, this->board);
@@ -101,11 +116,11 @@ bool ChessBoard::CheckMate(){
 				Move(r, c, mit->first, mit->second, false);
 				if(check() == 0){
 					UndoMove();
-				//	cout<<r<<" "<<c<<"can move to "<<mit->first<<" "<<mit->second<<endl;
+				
 					return false;
 				}
 				UndoMove();
-		//		cout<<"cannot move to "<<mit->first<<" "<<mit->second<<endl;
+		
 			}
 
 		}
@@ -114,6 +129,7 @@ bool ChessBoard::CheckMate(){
 
 }
 
+//updates the prevRow variable for the pawns so that the legality of en passant can be determined
 void ChessBoard::EPCleanup(){
 
 	int r, c;
@@ -138,6 +154,7 @@ void ChessBoard::EPCleanup(){
 	}
 }
 
+//prints out the chessboard in two different colors
 void ChessBoard::Print()
 {
     string solidRow = "\t  +----+----+----+----+----+----+----+----+";
@@ -165,6 +182,7 @@ void ChessBoard::Print()
     }  
 }
 
+//prints all valid moves that one team can make
 void ChessBoard::PrintAllValidMoves()
 {
     Piece* p;
@@ -190,8 +208,10 @@ void ChessBoard::PrintAllValidMoves()
     }
 }
 
+//checks if pawn promotion is available, returns location of the pawn by reference if it is available
 bool ChessBoard::PawnPCheck(int &row, int &col){
 
+	//checks whites
 	for(int i = 0;i < board[0].size();i++){
 		if( board[0][i] != nullptr && board[0][i]->GetColor() == 'w' && board[0][i]->GetSymbol() == 'P'){
 			row = 0;
@@ -200,6 +220,7 @@ bool ChessBoard::PawnPCheck(int &row, int &col){
 		}
 	}
 	
+	//checks blacks
 	for(int i = 0;i < board[7].size();i++){
 		if( board[7][i] != nullptr && board[7][i]->GetColor() == 'b' && board[7][i]->GetSymbol() == 'P'){
 			row = 7;
@@ -211,18 +232,21 @@ bool ChessBoard::PawnPCheck(int &row, int &col){
 	return false;
 }
 
-
+//performs pawn promotion, user enters what kind of piece they want and the piece is exchanged
 void ChessBoard::PawnPromotion(int row, int col){
 
 	string npiece;
 	char toColor;
 	unsigned int i;
+
+	//output and user inputs a piece
 	cout<<"Pawn Promotion! Please select a piece to switch out the pawn with: "<<endl;
 	cout<<"Please enter 'queen' 'bishop' 'knight' or 'rook'"<<endl;
 	cin>>npiece;
 
 	toColor = board[row][col]->GetColor();
 
+	//finds correct pawn
 	if(toColor == 'w'){
 		for( i = 0; i < whites.size();i++){
 			if(whites[i] == board[row][col])
@@ -238,7 +262,7 @@ void ChessBoard::PawnPromotion(int row, int col){
 
 	}
 
-
+	//exchanges a pawn for a queen
 	if(npiece == "queen"){
 		
 		if(toColor == 'w'){
@@ -255,6 +279,7 @@ void ChessBoard::PawnPromotion(int row, int col){
 		
 	}
 	
+	//exchanges a pawn for a bishop
 	else if(npiece == "bishop"){
 		
 		if(toColor == 'w'){
@@ -271,6 +296,7 @@ void ChessBoard::PawnPromotion(int row, int col){
 		
 	}
 
+	//exchanges a pawn for a knight
 	else if(npiece == "knight"){
 		
 		if(toColor == 'w'){
@@ -287,6 +313,7 @@ void ChessBoard::PawnPromotion(int row, int col){
 		
 	}
 
+	//exchanges a pawn for a rook
 	else if(npiece == "rook"){
 		
 		if(toColor == 'w'){
@@ -307,6 +334,7 @@ void ChessBoard::PawnPromotion(int row, int col){
 
 }
 
+//constructor, initializes board so that all of the pieces are in the proper places
 ChessBoard::ChessBoard() : turnCount(0), board(row_size, vector<Piece*>(col_size, nullptr))
 {
     Piece* buffer;
@@ -394,6 +422,7 @@ ChessBoard::ChessBoard() : turnCount(0), board(row_size, vector<Piece*>(col_size
 
 }
 
+//destructor, deletes all pieces in the board, and then the whites and blacks vector
 ChessBoard::~ChessBoard()
 {
     for(unsigned int i = 0; i < board.size(); i++)
@@ -414,6 +443,7 @@ ChessBoard::~ChessBoard()
     whites.clear();
 }
 
+//undoes a move, used in move function and GenerateMove
 void ChessBoard::UndoMove(){
 
 	board[prevFromRow][prevFromCol] = board[prevToRow][prevToCol];
@@ -437,6 +467,7 @@ void ChessBoard::UndoMove(){
         rook->DecMoveCount();
     }
 
+	//puts pawn back on the board if it was captured
 	if(prevToSymbol == 'P'){
 		board[prevToRow][ prevToCol] = new Pawn(prevToRow,  prevToCol, prevToColor);
 		if(prevToColor == 'w')
@@ -445,6 +476,7 @@ void ChessBoard::UndoMove(){
 			blacks.push_back(board[prevToRow][ prevToCol]);
 	}
 
+	//puts bishop back on the board if it was captured
 	else if(prevToSymbol == 'B'){
 		board[prevToRow][ prevToCol] = new Bishop(prevToRow,  prevToCol, prevToColor);
 		if(prevToColor == 'w')
@@ -453,6 +485,7 @@ void ChessBoard::UndoMove(){
 			blacks.push_back(board[prevToRow][ prevToCol]);
 	}
 
+	//puts knight back on the board if it was captured
 	else if(prevToSymbol == 'N'){
 		board[prevToRow][ prevToCol] = new Knight(prevToRow,  prevToCol, prevToColor);
 		if(prevToColor == 'w')
@@ -461,6 +494,7 @@ void ChessBoard::UndoMove(){
 			blacks.push_back(board[prevToRow][ prevToCol]);
 	}
 
+	//puts rook back on the board if it was captured
 	else if(prevToSymbol == 'R'){
 		board[prevToRow][ prevToCol] = new Rook(prevToRow,  prevToCol, prevToColor);
 		if(prevToColor == 'w')
@@ -469,6 +503,7 @@ void ChessBoard::UndoMove(){
 			blacks.push_back(board[prevToRow][ prevToCol]);
 	}
 	
+	//puts queen back on the board if it was captured
 	else if(prevToSymbol == 'Q'){
 		board[prevToRow][ prevToCol] = new Queen(prevToRow,  prevToCol, prevToColor);
 		if(prevToColor == 'w')
