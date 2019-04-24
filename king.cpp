@@ -94,7 +94,7 @@ void King::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> > &
     }
 }
 
-
+//determines if the king is in check.
 bool King::isInCheck(const vector<vector<Piece*> > &board, int r, int c)
 {
     vector<vector<Piece*> > newBoard = board;
