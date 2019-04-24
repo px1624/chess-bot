@@ -1,3 +1,8 @@
+/*chess_board.h - Written by Michael Wermert and Pengda Xie
+ * Description - This is the header file for the ChessBoard class. The functions are
+ * defined in chess_board.cpp.
+
+*/
 #ifndef CHESS_BOARD_H
 #define CHESS_BOARD_H
 #include <vector>
@@ -34,7 +39,7 @@ public:
 	bool CheckMate();
 	void EPCleanup();
 	void GenerateMove(std::multimap <int, AIMove, std::greater<int> > &allMoves);
-    void GenerateMove_2(std::multimap<int, AIMove, std::greater<int> > &allMoves);
+
 
 private:
     const int row_size = 8;

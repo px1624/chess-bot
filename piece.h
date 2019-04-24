@@ -1,3 +1,9 @@
+/*piece.h - Written by Michael Wermert and Pengda Xie
+ * Description - This file declares the basic piece class and the 
+ * specific classes for each piece that have inherited the base piece class
+ * functions.
+
+*/
 #ifndef PIECE_H
 #define PIECE_H
 #include <map>

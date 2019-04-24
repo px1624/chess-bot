@@ -1,3 +1,8 @@
+/*rook.cpp - Written by Michael Wermert and Pengda Xie
+ * Description - This file contains the method definitions for the rook class declared in
+ * piece.h.
+
+*/
 #include "piece.h"
 
 using namespace std;

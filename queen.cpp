@@ -1,7 +1,13 @@
+/*queen.cpp - Written by Michael Wermert and Pengda Xie
+ * Description - This file contains the method definitions for the queen class 
+ * declared at piece.h .
+
+*/
 #include "piece.h"
 
 using namespace std;
 
+//constructor
 Queen::Queen(int row, int col, char color):Piece(row, col, color, 'Q', 90)
 {
 }

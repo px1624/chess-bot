@@ -1,6 +1,6 @@
 /*chess_board.cpp - Written by Michael Wermert and Pengda Xie
 This file contains the method definitions for the ChessBoard class
-
+defined in chess_board.h.
 */
 #include "chess_board.h"
 #include <string>
@@ -69,9 +69,6 @@ void ChessBoard::GenerateMove(multimap <int, AIMove, std::greater<int> > &allMov
 
 }
 
-void ChessBoard::GenerateMove_2(multimap <int, AIMove, std::greater<int> > &allMoves)
-{
-}
 
 //determines if one side is in checkmate, returns true if yes
 bool ChessBoard::CheckMate(){
@@ -518,17 +515,22 @@ void ChessBoard::UndoMove(){
         board[prevToRow][prevToCol]->SetMoveCount(prevToMoveCount);
 }
 
+//moves a piece from board[rFrom][cFrom] to board[rTo][cTo], returns true if it is possible
+//false if it is not
 bool ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo, bool EPFlag)
 {
 	bool EFlag;
     Piece* src = board[rFrom][cFrom];
     multimap<int, int> moves;
-    if(src == nullptr)
+    
+	//checks to make sure that there is a piece in board[rFrom][cFrom]
+	if(src == nullptr)
     {
         cout << "Invalid move! There is no chess piece on this cell.\n";
         return false;
     }
     
+	//checks to make sure the piece belongs to player whose turn it is
     if((IsWhiteTurn() && src->GetColor() == 'b') || (!IsWhiteTurn() && src->GetColor() == 'w'))
     {
         cout << "Invalid move! You can't move another player's piece.\n";
@@ -597,26 +599,31 @@ bool ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo, bool EPFlag)
 		}
 
     }
+
+	//outputs that the move is invalid and returns false
     else
     {
-        cout << " 2nd Invalid move! This piece cannot move here."<<endl;
+        cout << "Invalid move! This piece cannot move here."<<endl;
 		return false;
 	}
 
 	return true;
 }
 
+//increments turnCount
 void ChessBoard::incTurnCount(){
 
 	turnCount++;
 
 }
 
+//returns turn count
 int ChessBoard::GetTurnCount()
 {
     return turnCount;
 }
 
+//checks if the moves map contains the move that is passed in
 bool ChessBoard::ContainsMove(multimap<int, int> &moves, int r, int c)
 {
     bool contains = false;
@@ -632,6 +639,7 @@ bool ChessBoard::ContainsMove(multimap<int, int> &moves, int r, int c)
     return contains;
 }
 
+//removes a piece from the board
 void ChessBoard::RemovePiece(int r, int c)
 {
     Piece* p = board[r][c];
@@ -652,15 +660,18 @@ void ChessBoard::RemovePiece(int r, int c)
     delete p;
 }
 
+//returns the color for a piece
 char ChessBoard::getSpaceColor(int r, int c){
 	return board[r][c]->GetColor();
 }
 
-
+//returns what type of piece is at the passed in location
 char ChessBoard::getSpaceType(int r, int c){
 	return board[r][c]->GetSymbol();
 }
 
+//checks if the there is a piece on the space,
+//returns true if board[r][c] is nullptr
 bool ChessBoard::checkNull(int r, int c){
 
 	if(board[r][c] == nullptr)
@@ -670,34 +681,39 @@ bool ChessBoard::checkNull(int r, int c){
 
 }
 
-
+//returns the pointer to a piece at board[r][c]
 Piece *ChessBoard::getPiece(int r, int c){
 
 	return board[r][c];
 
 }
 
-
-
+//returns a copy of the board
 std::vector<std::vector <Piece*> > ChessBoard::getBoard(){
 
 	return board;
 
 }
 
+//returns true if either team is in check
 int ChessBoard::check(){
 
 	std::multimap<int, int> kmoves;
 	std::multimap<int, int>::iterator mit;
 	int krow, kcol;
+
+	//returns true if the black king is in check
 	if(!IsWhiteTurn()){
 		
+		//finds position of the king
 		for(unsigned int i = 0; i < blacks.size();i++){
 			if(blacks[i]->GetSymbol() == 'K'){
 				blacks[i]->GetPosition(krow, kcol);
 				break;
 			}
 		}
+
+		//determines if the black king is in check
 		for(unsigned int i = 0;i < whites.size();i++){
 			
 			kmoves.clear();
@@ -711,8 +727,11 @@ int ChessBoard::check(){
 		}
 		return 0;
 	}
+
+	//determines if the white king is in check
 	else{
 		
+		//finds location of white king
 		for(unsigned int i = 0; i < whites.size();i++){
 			if(whites[i]->GetSymbol() == 'K'){
 				whites[i]->GetPosition(krow, kcol);
@@ -720,6 +739,7 @@ int ChessBoard::check(){
 			}
 		}
 	
+		//determines if white king is in check
 		for(unsigned int i = 0;i < blacks.size();i++){
 			
 			kmoves.clear();
@@ -737,6 +757,7 @@ int ChessBoard::check(){
 	}
 }
 
+//returns true if it is the white team's turn
 bool ChessBoard::IsWhiteTurn()
 {
     //turnCount records the count right before a player's move.

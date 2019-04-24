@@ -1,7 +1,13 @@
+/*bishop.cpp - Written by Michael Wermert and Pengda Xie
+ * Description - This contains the function definitions for
+ * the bishop class in the piece.h file.
+
+*/
 #include "piece.h"
-//#include <iostream>
+
 using namespace std;
 
+//constructor
 Bishop::Bishop(int row, int col, char color):Piece(row, col, color, 'B', 30)
 {
 }
@@ -12,7 +18,6 @@ void Bishop::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> >
     int r, c;
     
     //check top left
-    //cout << "check top left...\n" << flush;
     for(r = this->row - 1, c = this->col - 1; r >= 0 && c >= 0;)
     {
         if(board[r][c] == nullptr)
@@ -30,7 +35,6 @@ void Bishop::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> >
     }
 
     //check top right
-    //cout << "check top right...\n" << flush;
     for(r = this->row - 1, c = this->col + 1; r >= 0 && c < (int)board.size();)
     {
         if(board[r][c] == nullptr)
@@ -48,7 +52,6 @@ void Bishop::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> >
     }
  
     //check bottom left
-    //cout << "check bottom left...\n" << flush;
     for(r = this->row + 1, c = this->col - 1; r < (int)board.size() && c >= 0;)
     {
         if(board[r][c] == nullptr)
@@ -66,7 +69,6 @@ void Bishop::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> >
     }
  
     //check bottom right
-    //cout << "check bottom right...\n" << flush;
     for(r = this->row + 1, c = this->col + 1; r < (int)board.size() && c < (int)board.size();)
     {
         if(board[r][c] == nullptr)

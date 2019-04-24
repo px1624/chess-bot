@@ -1,3 +1,8 @@
+/* Pawn.cpp - Michael Wermert Pengda Xie
+ * Description - This file contains the member function for the pawn 
+ * class defined in piece.h.
+
+*/
 #include <iostream>
 #include <string>
 #include <map>
@@ -16,7 +21,7 @@ void Pawn::ValidMoves(std::multimap<int, int>&moves, const std::vector < std::ve
 
 		moves.clear();
 	    if (this->piece_color == 'w'){
-        //cout << "check w\n" << flush;
+        
 		
 		//if the white pawn is in the starting row, it can move two spaces forward
 		if(row == 6){		
