@@ -105,7 +105,6 @@ void King::ValidMoves(multimap<int, int> &moves, const vector<vector<Piece*> > &
     }
 }
 
-
 //return true if king is in check after moving to the target cell
 bool King::isInCheck(const vector<vector<Piece*> > &board, int r, int c)
 {

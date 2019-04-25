@@ -127,7 +127,7 @@ void OnePlayerMode(){
 					}
 
 					//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
-					if(turnCount%2+1 == 1){
+					
 						while(hintFlag == true ||game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'b'){
 							cout<<"Please enter a valid piece\n";
 
@@ -155,39 +155,8 @@ void OnePlayerMode(){
 								numFinCol = toupper(finCol) - 'A';
 							}
 						}
-					}
-					//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
-					else if(turnCount%2+1 == 2){
-						while(game.checkNull(hintFlag == true || row, numCol) == true || game.getSpaceColor(row, numCol) == 'w' ){
-							cout<<"Please enter a valid piece\n";
-
-							cin>>s;
-
-							transform(s.begin(), s.end(), s.begin(), ::toupper);
-							if(s == "QUIT")
-								return;
-
-							else if(s == "HINT"){
-								game.PrintAllValidMoves();
-								hintFlag = true;
-							}						                
-							else
-								hintFlag = false;
-
-							if(hintFlag == false){
-								row = stoi(s);
-
-								cin>>col>>finRow>>finCol;
-
-
-								row = 8 - row;
-								finRow = 8 - finRow;
-								numCol = toupper(col) - 'A';
-								numFinCol = toupper(finCol) - 'A';
-							}
-
-						}
-					}
+					
+					
 
 					game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
 
@@ -264,7 +233,7 @@ void OnePlayerMode(){
 							numFinCol = toupper(finCol) - 'A';
 						}
 						//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
-						if(turnCount%2+1 == 1){
+						
 							while(hintFlag == true || game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'b'){
 								cout<<"Please enter a valid piece\n";
 
@@ -294,40 +263,7 @@ void OnePlayerMode(){
 									numFinCol = toupper(finCol) - 'A';
 								}
 							}
-						}
-						//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
-						else if(turnCount%2+1 == 2){
-							while(hintFlag == true || game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'w'){
-								cout<<"Please enter a valid piece\n";
-
-								cin>>s;
-
-								transform(s.begin(), s.end(), s.begin(), ::toupper);
-								if(s == "QUIT")
-									return;
-
-
-								else if(s == "HINT"){
-									game.PrintAllValidMoves();
-									hintFlag = true;
-								}						                
-								else
-									hintFlag = false;
-
-								if(hintFlag == false){
-									row = stoi(s);
-
-									cin>>col>>finRow>>finCol;
-
-
-									row = 8 - row;
-									finRow = 8 - finRow;
-									numCol = toupper(col) - 'A';
-									numFinCol = toupper(finCol) - 'A';
-								}
-
-							}
-						}
+						
 
 
 						game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
