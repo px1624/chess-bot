@@ -18,6 +18,6 @@ moves he can make broken down by piece. Finally the last option a player has is 
 following format "rowofPiecetoMove columnofPiecetoMove theRowtoMoveTo thecolumnToMoveTo." An example would be "2 d 4 d." The input is not case sensitive. All of the rules of chess apply, and the game ends when one player is put in checkmate, or a stalemate is reached.
 
 
-4.The only known glitch so far is when the user erroneously enters an invalid value for the rows. Because the input is coming in as a string,and using stoi, if the user incorrectly enters the row, an stoi error will occur, ending the game. We did not intend for this to happen.
+4. The only known glitch so far is when the user erroneously enters an invalid value for the rows. Because the input is coming in as a string,and using stoi, if the user incorrectly enters the row, an stoi error will occur, ending the game. We did not intend for this to happen.
 
 
