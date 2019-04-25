@@ -1,6 +1,9 @@
+/*chess_player.cpp - Written by Michael Wermert and Pengda Xie
+Description - This is the file that contains the menu, the one player mode, and the 2 player mode.
+The format for the user input is listed in the user manual.
+*/
 #include "piece.h"
 #include "chess_board.h"
-
 #include <iostream>
 #include <cstdlib>
 #include <vector>
@@ -55,6 +58,7 @@ int main(){
 
 }
 
+//one player mode
 void OnePlayerMode(){
 
 
@@ -74,6 +78,7 @@ void OnePlayerMode(){
 	multimap <int, AIMove, std::greater<int> > allMoves;
 	multimap <int, AIMove, std::greater<int> >::iterator AImit;
 
+	//creates chess board
 	ChessBoard game;
 	multimap <int, int> moves;
 	multimap <int, int>::iterator mit;
@@ -81,6 +86,7 @@ void OnePlayerMode(){
 	while(true){
 
 
+		//prints the board and prompts the appropriate player to move
 		game.Print();
 		moves.clear();
 		newCheck = 1;
@@ -93,10 +99,13 @@ void OnePlayerMode(){
 		cout<<"P"<< (game.IsWhiteTurn()? "1" : "2") <<" please enter your move: \n";
 
 		//DATA MUST BE ENTERED IN THE FORM ROWOFYOURPIECE COLOFYOURPIECE ROWOFNEWSPACE COLOFNEWSPACE EX. 2 A 2 B
+		
+		//human player's move
 		if(game.IsWhiteTurn()){
 			if(check == 0){
-				while(moveCheck == false || newCheck == 1){
-
+				while(moveCheck == false ){
+					
+					//checks if there is a stalemate, ends game if there is
 					if(game.CheckMate() == true){
 						cout<<"P"<<(turnCount+1)%2+1<<" wins by Stalemate!"<<endl;
 						return;
@@ -104,17 +113,22 @@ void OnePlayerMode(){
 
 
 					cin>>s;
-					//to uppercase
+					
 					transform(s.begin(), s.end(), s.begin(), ::toupper);
+					
+					//checks for the quit command
 					if(s == "QUIT")
 						return;
+					
+					//checks for the hint command
 					else if(s == "HINT"){
 						game.PrintAllValidMoves();
 						hintFlag = true;
 					}
 					else
 						hintFlag = false;
-
+					
+					//user input is processed
 					if(hintFlag == false){
 						row = stoi(s);
 
@@ -166,37 +180,19 @@ void OnePlayerMode(){
 					//checks to make sure the move is valid
 					if(moveCheck == false)
 						cout << "Invalid move! This piece cannot move here."<<endl;
-
-					//makes sure that the move does not put the king in danger
-					//do not need to check if king is moving because king
-					//by default cannot move into a check
-					Piece* tmp = game.getPiece(row, numCol);
-					bool moved = false;
-					if(tmp != nullptr && tmp->GetSymbol() != 'K')
-					{
-						moved = game.Move(row, numCol, finRow, numFinCol, false);
-					}
-					newCheck = game.check();
-					if(newCheck == 1){
-						cout <<"Cannot put the king in danger!"<<endl;
-					}
-					if(moved)
-						game.UndoMove();
+					
 				}
 
-				/* uncomment this to debug
-				   cout << "Valid moves for this piece:\n";
-				   for(mit = moves.begin(); mit != moves.end();++mit)
-				   cout<< 8 - mit->first << " " << static_cast<char>(mit->second + 'A')<<endl;
-				   */
-
+				//moves piece and checks if pawn promotion is available
 				game.Move(row, numCol, finRow, numFinCol, true);	
 				if(game.PawnPCheck(PProw, PPcol) == true)
 					game.PawnPromotion(PProw, PPcol);
 
 			}
+			//occurs if human player is in check
 			if(check == 1){
-
+				
+				//input processed exactly the same as above
 				while(check == 1){
 
 					if(game.CheckMate() == true){
@@ -275,13 +271,11 @@ void OnePlayerMode(){
 
 					}
 
-					//get moves and print them for debugging purpose
 
 
 					game.Move(row, numCol, finRow, numFinCol, true);	
 
-					//this shouldn't be neccessary anymore, since validMoves for king does a check
-					//for if the target cell is under attack.
+					//makes sure that the king is moved out of check
 					check = game.check();
 
 					if(check == 1){
@@ -293,10 +287,13 @@ void OnePlayerMode(){
 
 			}
 		}
+
+		//AI move
 		else{
 
 			allMoves.clear();
-
+			
+			//checks if the ai is in stalemate or check
 			if(check == 0){
 
 				if(game.CheckMate() == true){
@@ -312,6 +309,8 @@ void OnePlayerMode(){
 				}
 
 			}
+
+			//generates a move and makes sure it does not put the king in check
 			game.GenerateMove(allMoves);
 			for(AImit = allMoves.begin();AImit != allMoves.end();++AImit){
 				game.Move(AImit->second.rFrom, AImit->second.cFrom, AImit->second.rTo, AImit->second.cTo, false);
@@ -321,16 +320,21 @@ void OnePlayerMode(){
 				}
 				game.UndoMove();						
 			}
+
+			//moves piece and outputs how the bot moved
 			game.Move(AImit->second.rFrom, AImit->second.cFrom, AImit->second.rTo, AImit->second.cTo, true);
 			printf("Chess bot moved: %d %c %d %c\n", 8 - AImit->second.rFrom, AImit->second.cFrom + 'A',
 					8 - AImit->second.rTo, AImit->second.cTo + 'A');
 		}
-
+		
+		//increments turn count
 		game.incTurnCount();
 		turnCount++;
 	}
 
 }
+
+//two player mode
 void TwoPlayerMode(){
 
 	int row;
@@ -354,7 +358,7 @@ void TwoPlayerMode(){
 
 	while (true){
 
-
+		//prints board and determines whether or not either player is in check
 		game.Print();
 		moves.clear();
 		newCheck = 1;
@@ -367,9 +371,10 @@ void TwoPlayerMode(){
 		cout<<"P"<< (game.IsWhiteTurn()? "1" : "2") <<" please enter your move: \n";
 
 		//DATA MUST BE ENTERED IN THE FORM ROWOFYOURPIECE COLOFYOURPIECE ROWOFNEWSPACE COLOFNEWSPACE EX. 2 A 2 B
-
+		
+		//occurs if the players are in check, output is processed exactly the same way as above
 		if(check == 0){
-			while(moveCheck == false || newCheck == 1){
+			while(moveCheck == false ){
 
 				if(game.CheckMate() == true){
 					cout<<"P"<<(turnCount+1)%2+1<<" wins by Stalemate!"<<endl;
@@ -378,7 +383,6 @@ void TwoPlayerMode(){
 
 
 				cin>>s;
-				//to uppercase
 				transform(s.begin(), s.end(), s.begin(), ::toupper);
 				if(s == "QUIT")
 					return;
@@ -403,11 +407,7 @@ void TwoPlayerMode(){
 
 				}
 
-
-				//			cout<<row << numCol << finRow << numFinCol <<endl;
-
-				//		cout<<row<<" "<<numCol<<endl;
-				//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
+				//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece, for p1
 				if(turnCount%2+1 == 1){
 					while(hintFlag == true || game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'b'){
 						cout<<"Please enter a valid piece\n";
@@ -438,7 +438,7 @@ void TwoPlayerMode(){
 						}
 					}
 				}
-				//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece
+				//checks to make sure the input is valid, repeatedly makes the user has inputted a valid piece, for player 2
 				else if(turnCount%2+1 == 2){
 					while(hintFlag == true || game.checkNull(row, numCol) == true || game.getSpaceColor(row, numCol) == 'w'){
 						cout<<"Please enter a valid piece\n";
@@ -470,7 +470,7 @@ void TwoPlayerMode(){
 					}
 				}
 
-
+				
 				game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
 
 				moveCheck = game.ContainsMove(moves, finRow, numFinCol);
@@ -480,36 +480,19 @@ void TwoPlayerMode(){
 				if(moveCheck == false)
 					cout << "Invalid move! This piece cannot move here."<<endl;
 
-				//makes sure that the move does not put the king in danger
-				//do not need to check if king is moving because king
-				//by default cannot move into a check
-				Piece* tmp = game.getPiece(row, numCol);
-				bool moved = false;
-				if(tmp != nullptr && tmp->GetSymbol() != 'K')
-				{
-					moved = game.Move(row, numCol, finRow, numFinCol, false);
-				}
-				newCheck = game.check();
-				if(newCheck == 1){
-					cout <<"Cannot put the king in danger!"<<endl;
-				}
-				if(moved)
-					game.UndoMove();
 			}
 
-			/* debug message
-			   cout << "Valid moves for this piece:\n";
-			   for(mit = moves.begin(); mit != moves.end();++mit)
-			   cout<< 8 - mit->first << " " << static_cast<char>(mit->second + 'A')<<endl;
-			   */
-
+			//moves piece and checks pawn promotion
 			game.Move(row, numCol, finRow, numFinCol, true);	
 			if(game.PawnPCheck(PProw, PPcol) == true)
 				game.PawnPromotion(PProw, PPcol);
 
 		}
-		if(check == 1){
 
+		//occurs while a player is in check
+		if(check == 1){
+			
+			//loop repeats until player is not in check
 			while(check == 1){
 
 				if(game.CheckMate() == true){
@@ -518,9 +501,10 @@ void TwoPlayerMode(){
 				}
 
 				moveCheck = false;
+				//input processed the same way as in the one player mode
 				while(moveCheck == false){
 
-
+				
 					cin>>s;
 
 					transform(s.begin(), s.end(), s.begin(), ::toupper);
@@ -612,7 +596,7 @@ void TwoPlayerMode(){
 						}
 					}
 
-
+					//checks to make sure move is valid
 					game.getPiece(row, numCol)->ValidMoves(moves, game.getBoard());	
 
 					moveCheck = game.ContainsMove(moves, finRow, numFinCol);
@@ -622,15 +606,14 @@ void TwoPlayerMode(){
 
 				}
 
-				//get moves and print them for debugging purpose
+			
 
-
+				//moves piece
 				game.Move(row, numCol, finRow, numFinCol, true);	
 
-				//this shouldn't be neccessary anymore, since validMoves for king does a check
-				//for if the target cell is under attack.
+				//makes sure the king moves out of check
 				check = game.check();
-
+				
 				if(check == 1){
 					cout<<"Invalid Move! You must move the king out of check\n";
 					game.UndoMove();
@@ -640,7 +623,7 @@ void TwoPlayerMode(){
 
 		}
 
-
+		//increments turn count
 		game.incTurnCount();
 		turnCount++;
 	}
