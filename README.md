@@ -5,7 +5,8 @@ ULTIMATE CHESS USER GUIDE
 2. You can compile Ultimate chess using the makefile provided in the github repository. To run ultimate chess,
 simply type "./chess_player" after the make
 
-3.------Menu---------
+3.
+------Menu---------
 
 When you start the file, you will see the main menu. Enter 1 to go to the 1 player mode, 2 to go to the two player mode, or 3 to quit.
 
