@@ -155,8 +155,8 @@ void ChessBoard::EPCleanup(){
 void ChessBoard::Print()
 {
     string solidRow = "\t  +----+----+----+----+----+----+----+----+";
-    string buffRow  = "\t  |    |    |    |    |    |    |    |    |";
 
+    //print column indicator
     cout << endl;
     cout << "\t     " << 'A';
     for(int i = 1; i < col_size; i++)
@@ -165,16 +165,15 @@ void ChessBoard::Print()
     cout << solidRow << endl;
 
 
+    //print chess pieces
     for(int i = 0; i < row_size; i++)
     {
-        //cout << buffRow << endl;
         cout << "\t" << 8 - i << " |";
         for(int j = 0;  j < col_size; j++){
             //string bgColor = ((i + j) % 2 == 0)? "47" : "40";
             cout << " " << (board[i][j] == nullptr ? "  ": board[i][j]->GetPieceStr()) << " |";
         }
         cout << endl;
-        //cout << buffRow << endl;
         cout << solidRow << endl;
     }  
 }
@@ -186,22 +185,25 @@ void ChessBoard::PrintAllValidMoves()
     multimap<int, int> m;
     multimap<int, int>::iterator it;
     int r, c;
+    //get white pieces in white's turn, and black pieces for black's turn
     vector<Piece*>* pieces = IsWhiteTurn() ? &whites : &blacks;
 
     for(int i = 0; i < (int)pieces->size(); i++)
     {
-            p = (*pieces)[i];
-            if(p != nullptr)
-            {
-                m.clear();
-                p->ValidMoves(m, board);
-                p->GetPosition(r, c);
+        p = (*pieces)[i];
+        if(p != nullptr)
+        {
+            m.clear();
+            //get valid moves and piece's current position
+            p->ValidMoves(m, board);
+            p->GetPosition(r, c);
 
-                printf("%s (%d, %c):", p->GetPieceStr().c_str(), 8 - r, static_cast<char>(c+'A'));
-                for(it = m.begin(); it != m.end(); ++it)
-                    printf(" (%d, %c)", 8 - it->first, static_cast<char>(it->second + 'A'));
-                printf("\n");
-            }
+            //print all valid moves for this piece
+            printf("%s (%d, %c):", p->GetPieceStr().c_str(), 8 - r, static_cast<char>(c+'A'));
+            for(it = m.begin(); it != m.end(); ++it)
+                printf(" (%d, %c)", 8 - it->first, static_cast<char>(it->second + 'A'));
+            printf("\n");
+        }
     }
 }
 
@@ -543,6 +545,7 @@ bool ChessBoard::Move(int rFrom, int cFrom, int rTo, int cTo, bool EPFlag)
     if(ContainsMove(moves, rTo, cTo))
     {	
 
+        //record where a piece is moving from and to
 		prevFromRow = rFrom;
 		prevFromCol = cFrom;
 		src->SetPrevRow(rFrom);
