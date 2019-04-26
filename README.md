@@ -66,7 +66,7 @@ and to check stalemate run
 ./chess_player < input3.txt
 ```
 
-## Known Issue
+## Known Issues
 
 The only known issue so far is when the user erroneously enters an invalid value for the rows. Because the input is coming in as a string,and using stoi, if the user incorrectly enters the row, an stoi error will occur, ending the game. We did not intend for this to happen.
 
