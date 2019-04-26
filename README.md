@@ -1,18 +1,37 @@
 # Ultimate Chess!
------------------
-Ultimate Chess is a console-based chess game which can be played between up to two players. Ultimate Chess follows all the rules of the traditional chess. Each chess piece is represented by a colored letter on a 8x8 console grid. King, Queen, Bishop, Knight, Rook and Pawn correpond to the letter 'K', 'Q', 'B', 'N', 'R' and 'P' respectively. The color of the letter can be either cyan for white pieces or magenta for black pieces. The game ends when a checkmate or a stalemate occurs.
+
+Ultimate Chess is a console-based chess game written in C++. Ultimate Chess follows all the rules of the traditional chess. Each chess piece is represented by a colored letter on a 8x8 console grid. King, Queen, Bishop, Knight, Rook and Pawn correpond to the letter 'K', 'Q', 'B', 'N', 'R' and 'P' respectively. The color of the letter can be either cyan for white pieces or magenta for black pieces. The game ends when a checkmate or a stalemate occurs.
 
 
 ## Getting Started
-------------------
-Ultimate Chess currently only runs on Linux machines. Simply clone this repository to get a copy of the souce files.
 
-1. Ultimate chess was built and on the Hydra machines and requires no special libraries.
+Ultimate Chess currently only runs on Linux machines. Simply clone this repository to get a copy of the souce files.  
+You can clone this project by running one of the following commands in Linux console:  
+  SSH: `git clone git@github.com:px1624/chess-bot.git`  
+HTTPS: `git clone https://github.com/px1624/chess-bot.git`  
 
-2. You can compile Ultimate chess using the makefile provided in the github repository. To run ultimate chess,
-simply type "./chess_player" after the make
+### Prerequisites
 
-3.
+Ultimate Chess uses C++ standard library and it requires not external libraries.  
+Other requirements including g++ compiler and make are needed to build the program.
+
+### Installing
+
+Navigate to the project root directory on the console and run  
+```
+make
+```
+This should build the program "chess_player" using the makefile in the project directory.
+
+Simple run the following command to start the program: 
+```
+./chess_player
+```
+Notice the program does not take any command line argument.
+
+### How To Play
+
+```
    ------Menu---------
 
    When you start the file, you will see the main menu. Enter 1 to go to the 1 player mode, 2 to go to the two player mode, or 3 to quit.
@@ -30,5 +49,6 @@ simply type "./chess_player" after the make
 
 5. If you would like to check the win conditions (check and stalemate), we have prepared test cases that show that these work. For testing checkmate, run 
 "./chess_player < test2.txt" and to check stalemate, run "./chess_player < input3.txt"
+```
 
 
