@@ -31,29 +31,27 @@ Notice the program does not take any command line argument.
 
 ### How To Play
 
-```
-Menu
+
+##### Game Menu
 
 When you start the program, you will see the main menu.  
 Enter 1 to go to the 1 player mode, 2 to go to the two player mode, or 3 to quit.  
-1 player mode: you will be playing as P1 (cyan) against a computer (P2), and you will be prompt to move first
-2 player mode: two players alternating moves starting from P1 (cyan)
+1 player mode: you will be playing as P1 (cyan) against a computer (P2), and you will be prompted to move first  
+2 player mode: two players alternating moves starting from P1 (cyan)  
 quit: exit the program
-```
 
-```
-In game
+---
+##### In The Game
 
-In both the one player and two player modes, the user has the same options of what they can enter.
+In both the one player and two player modes, the user has the same options of what they can enter.  
 At any time, a player can quit the game by entering "QUIT" when he or she is propmted to enter a move.
 
 The player can also enter "HINT" when prompted to enter a move to display all of the available moves he can make broken down by piece.
    
-Finally the last option a player has is to enter his move.
-To correctly enter a move, the input MUST be in the following format "rowofPiecetoMove columnofPiecetoMove theRowtoMoveTo thecolumnToMoveTo"
-An example would be "2 d 4 d." The input is not case sensitive.
-All of the rules of chess apply, and the game ends when one player is put in checkmate, or a stalemate is reached.
-```
+Finally the last option a player has is to enter his move.  
+To correctly enter a move, the input MUST be in the following format "rowofPiecetoMove columnofPiecetoMove theRowtoMoveTo thecolumnToMoveTo"  
+An example would be "2 d 4 d." The input is not case sensitive.  
+All of the rules of chess apply, and the game ends when one player is put in checkmate, or a stalemate is reached.  
 
 ## Running The Tests
 
