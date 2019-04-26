@@ -20,4 +20,7 @@ following format "rowofPiecetoMove columnofPiecetoMove theRowtoMoveTo thecolumnT
 
 4. The only known glitch so far is when the user erroneously enters an invalid value for the rows. Because the input is coming in as a string,and using stoi, if the user incorrectly enters the row, an stoi error will occur, ending the game. We did not intend for this to happen.
 
+5. If you would like to check the win conditions (check and stalemate), we have prepared test cases that show that these work. For testing checkmate, run 
+"./chess_player < test2.txt" and to check stalemate, run "./chess_player < input3.txt"
+
 
