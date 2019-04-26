@@ -44,12 +44,12 @@ quit: exit the program
 ##### In The Game
 
 In both the one player and two player modes, the user has the same options of what they can enter.  
-At any time, a player can quit the game by entering "QUIT" when he or she is propmted to enter a move.
+At any time, a player can quit the game by entering **QUIT** when he or she is propmted to enter a move.
 
-The player can also enter "HINT" when prompted to enter a move to display all of the available moves he can make broken down by piece.
+The player can also enter **HINT** when prompted to enter a move to display all of the available moves he can make broken down by piece.
    
 Finally the last option a player has is to enter his move.  
-To correctly enter a move, the input MUST be in the following format "rowofPiecetoMove columnofPiecetoMove theRowtoMoveTo thecolumnToMoveTo"  
+To correctly enter a move, the input **_MUST_** be in the following format **rowofPiecetoMove columnofPiecetoMove theRowtoMoveTo thecolumnToMoveTo**  
 An example would be "2 d 4 d." The input is not case sensitive.  
 All of the rules of chess apply, and the game ends when one player is put in checkmate, or a stalemate is reached.  
 
