@@ -40,7 +40,7 @@ Enter 1 to go to the 1 player mode, 2 to go to the two player mode, or 3 to quit
 2 player mode: two players alternating moves starting from P1 (cyan)  
 quit: exit the program
 
----
+
 ##### In The Game
 
 In both the one player and two player modes, the user has the same options of what they can enter.  
